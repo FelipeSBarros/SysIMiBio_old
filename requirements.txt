@@ -10,7 +10,7 @@ Django==3.0.4
 django-import-export==2.0.2
 et-xmlfile==1.0.1
 Fiona==1.8.13
-GDAL==3.0.4
+#GDAL==3.0.4
 geopandas==0.7.0
 jdcal==1.4.1
 MarkupPy==1.14
