@@ -66,3 +66,13 @@ python manage.py migrate biodiversity
 ## test with django-import-export  
 
 `pip install django-import-export`  
+
+## Geodatabase
+
+```
+sudo su
+su postgres
+createdb imibio --template=GISTemplate
+psql imibio
+create extension postgis
+```
