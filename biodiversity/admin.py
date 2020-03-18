@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import gbif
+from .models import Gbif
 
-admin.site.register(gbif)
+admin.site.register(Gbif)
