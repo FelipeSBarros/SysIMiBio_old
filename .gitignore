@@ -88,3 +88,6 @@ mediafiles
 
 #vscode
 .vscode/
+
+# outros
+.fuse*
