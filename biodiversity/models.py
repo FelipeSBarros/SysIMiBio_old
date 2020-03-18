@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 
 
-class gbif(models.Model):
+class Gbif(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     gbifID = models.BigIntegerField(blank=True, null=True)
     abstract = models.CharField(max_length=254, blank=True, null=True)
