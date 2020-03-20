@@ -196,7 +196,7 @@ class Gbif(models.Model):
     higherClassification = models.CharField(max_length=254, blank=True, null=True)
     kingdom = models.CharField(max_length=254, blank=True, null=True)
     phylum = models.CharField(max_length=254, blank=True, null=True)
-    # class = models.CharField(max_length=254, blank = True)
+    clase = models.CharField("class", max_length=254, blank = True, null = True)
     order = models.CharField(max_length=254, blank=True, null=True)
     family = models.CharField(max_length=254, blank=True, null=True)
     genus = models.CharField(max_length=254, blank=True, null=True)

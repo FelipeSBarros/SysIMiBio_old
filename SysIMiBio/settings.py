@@ -36,7 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my apps
     'biodiversity',
+    #Others app
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

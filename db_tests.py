@@ -19,7 +19,7 @@ for row in c.execute('SELECT * FROM biodiversity_gbif'):
 conn.close()
 
 # delete
-c.execute("DELETE FROM biodiversity_gbif WHERE author_id = 1")
+c.execute("DELETE FROM biodiversity_gbif WHERE author_id != 0")
 conn.commit()
 conn.close()
 

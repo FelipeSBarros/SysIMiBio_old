@@ -63,9 +63,17 @@ python manage.py makemigrations biodiversity
 python manage.py migrate biodiversity
 ```
 
-## test with django-import-export  
+## Importing initial data (GBIF and SNDB) to SQLite  
+Process done with [csv2sqlite](https://github.com/rufuspollock/csv2sqlite)  
+The **CSV** file had to be modified, adding `id` and `author_id` fields at the begining and at end, repectively;  
 
-`pip install django-import-export`  
+```shell script
+#See how it works
+./csv2sqlite-master/csv2sqlite.py -h
+
+#executign importion
+./csv2sqlite-master/csv2sqlite.py ./data/HeadOccurrence.csv db.sqlite3 biodiversity_gbif
+```
 
 ## Geodatabase
 
@@ -75,4 +83,11 @@ su postgres
 createdb imibio --template=GISTemplate
 psql imibio
 create extension postgis
-```
+```  
+
+
+### Importing initial data (GBIF and SNDB) to SQLite with pandas [not finished]  
+
+[from Regis video](https://www.youtube.com/watch?v=l7-lypZz95g)  
+
+`pip install ipython[notebook]`  
