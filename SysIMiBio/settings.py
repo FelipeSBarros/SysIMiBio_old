@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # my apps
-    'biodiversity',
+    'SysIMiBio.biodiversity',
     #Others app
     'django_extensions',
 ]

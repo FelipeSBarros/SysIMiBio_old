@@ -108,3 +108,7 @@ create extension postgis
 [from Regis video](https://www.youtube.com/watch?v=l7-lypZz95g)  
 
 `pip install ipython[notebook]`  
+
+## Tutoriais  
+* [Herança de models](https://youtu.be/nlHfCt0HuGY?t=382)  
+*
