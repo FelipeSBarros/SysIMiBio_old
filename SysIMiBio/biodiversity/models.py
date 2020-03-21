@@ -245,4 +245,4 @@ class Gbif(models.Model):
     relativeOrganismQuantity = models.CharField(max_length=254, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.author}'
+        return f'{self.acceptedScientificName}'
