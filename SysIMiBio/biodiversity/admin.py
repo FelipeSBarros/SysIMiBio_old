@@ -1,4 +1,13 @@
 from django.contrib import admin
 from .models import Gbif
 
-admin.site.register(Gbif)
+@admin.register(Gbif)
+class GbifAdmin(admin.ModelAdmin):
+    list_display = ('__str__',
+        "family",
+        "genus",
+        "county",
+        "municipality",
+        "locality")
+    search_fields = ('acceptedScientificName',)
+    list_filter = ('hasCoordinate',)
