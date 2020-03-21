@@ -35,8 +35,25 @@ python manage.py migrate
 
 #### Setting up  
 
-#### Changign configs (settings.py)  
+#### Isolate env settings from code
+* Create .env file with [env information](https://github.com/silveriomm/django_estoque_regis/tree/master/contrib).  
+* Using [decouple](https://github.com/henriquebastos/python-decouple)  
 
+```shell script
+pip install python-decouple
+```  
+ 
+##### Changing configs (settings.py)  
+
+* Decouple config:
+```shell script
+from decouple import config, Csv
+
+# then change 
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast = Csv())
+```
 * [Time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones): Search for `TIME_ZONE` and change for the desired one;  
 * [Lenguage/translation](https://docs.djangoproject.com/en/2.0/ref/settings/#language-code): Search for `LANGUAGE_CODE` and change for the desired lenguage.  
 * Static files: Search for (it will be in the end of the setting.py) `STATIC_URL`, and add new variable: `STATIC_ROOT = os.path.join(BASE_DIR, 'static')`  
