@@ -4,10 +4,10 @@ from .models import Gbif
 @admin.register(Gbif)
 class GbifAdmin(admin.ModelAdmin):
     list_display = ('__str__',
-        "family",
-        "genus",
-        "county",
-        "municipality",
-        "locality")
+                    "family",
+                    'hasCoordinate',
+                    "county",
+                    "municipality",
+                    "locality")
     search_fields = ('acceptedScientificName',)
     list_filter = ('hasCoordinate',)
