@@ -62,6 +62,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast = Csv())
 #### Creating App  
 
 ```shell script
+cd SysIMiBio
+python manage.py startapp core
 python manage.py startapp biodivertsity
 ```
 
@@ -111,4 +113,4 @@ create extension postgis
 
 ## Tutoriais  
 * [Herança de models](https://youtu.be/nlHfCt0HuGY?t=382)  
-*
+* 
