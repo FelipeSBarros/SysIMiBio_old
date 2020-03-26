@@ -5,8 +5,26 @@
     <h2><i class ="fa fa-user"></i>Lista biodiversidad</h2>
     {% if object_list %}
         <table class = 'table table-striped'>
+            <thead>
+            <tr>
+                <th>Nombre scientifico</th>
+                <th>Familia</th>
+                <th>Tiene coordenadas?</th>
+                <th>Departamento</th>
+                <th>Municipalidad</th>
+                <th>Localidad</th>
+            </tr>
+            </thead>
 
             {% for object in object_list %}
+            <tr>
+                <td>{{ object.scientificName }}</td>
+                <td>{{ object.Family }}</td>
+                <td>{{ object.hasCoordinate }}</td>
+                <td>{{ object.county }}</td>
+                <td>{{ object.municipality }}</td>
+                <td>{{ object.localilty }}</td>
+            </tr>
             {% endfor %}
         </table>
     {% else %}
