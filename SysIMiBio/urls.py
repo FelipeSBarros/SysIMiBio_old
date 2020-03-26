@@ -18,5 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('SysIMiBio.core.urls')),
+    path('Biodiversidad/', include('SysIMiBio.biodiversity.urls')),
     path('admin/', admin.site.urls),
 ]
