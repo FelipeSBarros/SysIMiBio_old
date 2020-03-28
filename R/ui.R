@@ -19,46 +19,60 @@ shinyUI(dashboardPage(
     # Sidebar with a slider input for number of bins
     dashboardSidebar(
         sidebarMenu(
-            menuItem("general", tabName = "general", icon = icon("dashboard")),
-            menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+            menuItem("General", tabName = "General", icon = icon("dashboard")),
+            menuItem("Taxonomia", tabName = "Taxonomia", icon = icon("th"))
         )),
 
         # Main page
     dashboardBody(
         tabItems(
             # First tab content
-            tabItem(tabName = "general",
+            tabItem(tabName = "General",
         fluidRow(
             valueBoxOutput("observaciones"),
             valueBoxOutput("familias"),
-            valueBoxOutput("rich_nutrient")
+            valueBoxOutput("species")
         ),
         fluidRow(
-            box(title = "Biodiversity",
+            box(title = "Publishers", solidHeader = T,
+                width = 6, collapsible = T,
+                plotly::plotlyOutput("Pub")),
+            box(title = "Año de la observación",
                 solidHeader = T,
                 width = 6,
                 collapsible = T,
-                div(DT::DTOutput("biodiversity"), style = "font-size: 70%;")),
-            box(title = "Publishers", solidHeader = T,
-                width = 6, collapsible = T,
-                plotlyOutput("Pub"))
+                plotly::plotlyOutput("Ano"))
         ),
         fluidRow(
             box(title = "Tipo de regitro",
                 solidHeader = T,
                 width = 6,
                 collapsible = T,
-                plotlyOutput("Obs")),
+                plotly::plotlyOutput("Obs")),
             box(title = "...", solidHeader = T,
-                width = 8, collapsible = T,
-                plotlyOutput("..."))
+                width = 6, collapsible = T,
+                plotly::plotlyOutput("..."))
         )
         
     ),
+    
     # Second tab content
-    tabItem(tabName = "widgets",
-            h2("Widgets tab content")
-    )
-        )
-    )
+            tabItem(tabName = "Taxonomia",
+                    #h2("teste"))
+        fluidRow(
+            box(
+                title = "Taxon rank", 
+                solidHeader = T,
+                width = 6, 
+                collapsible = T,
+                plotly::plotlyOutput("TRank")),
+            box(
+                title = "Taxon Statuts",
+                solidHeader = T,
+                width = 6, 
+                collapsible = T,
+                plotly::plotlyOutput("TStatus")
+                )
+            ))
+    ))
 ))

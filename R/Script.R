@@ -45,6 +45,19 @@ bio %>%
   arrange(desc(Observaciones)) %>% 
   ggplot(aes(x = taxonRank, y = Observaciones)) + geom_col()
 
+# txon status
+bio %>%
+  group_by(taxonomicStatus) %>% 
+  summarise(Observaciones = count()) %>% 
+  arrange(desc(Observaciones)) %>% 
+  ggplot(aes(x = taxonomicStatus, y = Observaciones)) + geom_col()
+
+# Issue
+bio %>%
+  group_by(issue) %>% 
+  summarise(Observaciones = count()) %>% 
+  arrange(desc(Observaciones)) %>% 
+  ggplot(aes(x = issue, y = Observaciones)) + geom_col()
 
 taxon = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus")
 rep( si, no, )

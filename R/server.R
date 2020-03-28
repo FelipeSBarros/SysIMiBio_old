@@ -17,16 +17,19 @@ shinyServer(function(input, output) {
     output$observaciones <- renderValueBox({
         n <- as.data.frame(bio %>% count())
         valueBox(n, 
-                 "observaciones", icon = icon("eye"), color = "yellow")
+                 "observaciones", icon = icon("eye"), color = "green")
     })
     
     # total familias
     output$familias <- renderValueBox({
         n <- as.data.frame(bio %>% summarise(count = n_distinct(Family)))
-        valueBox(n, 
-                 "Familias", icon = icon("group"), color = "green")
+        valueBox(n, "Familias", icon = icon("group"), color = "yellow")
     })
-    # "gbifID", "Publisher", "BasisOfRecord", "EventDate", "Year"
+    # total species
+    output$species <- renderValueBox({
+        n <- as.data.frame(bio %>% summarise(count = n_distinct(scientificName)))
+        valueBox(n, "Especies", icon = icon("tree"), color = "orange")
+    })
     
     # Origen de los datos
     output$Pub <- plotly::renderPlotly({
@@ -51,14 +54,39 @@ shinyServer(function(input, output) {
             geom_col() + theme_minimal()
         ggplotly(obsPlot) })
         
-    # ano de observacion
-    bio %>%
-        group_by(year) %>% 
-        summarise(Observaciones = count()) %>% 
-        arrange(desc(Observaciones)) %>% 
-        ggplot(aes(x = year, y = Observaciones)) + geom_col()
+    # ano de la observacion
+    output$Ano <- plotly::renderPlotly({
+        anoData <- bio %>%
+            group_by(year) %>% 
+            summarise(Observaciones = count()) %>% 
+            arrange(desc(Observaciones))
+        
+        anoPlot <- anoData %>% 
+            ggplot(aes(x = year, y = Observaciones)) +
+            geom_col() + theme_minimal()
+        ggplotly(anoPlot)})
     
+    # TaxonRank
+    output$TRank <- plotly::renderPlotly({
+        trankData <- bio %>%
+            group_by(taxonRank) %>% 
+            summarise(Observaciones = count()) %>% 
+            arrange(desc(Observaciones))
+        
+        trankPlot <- trankData %>% 
+            ggplot(aes(x = taxonRank, y = Observaciones)) +
+            geom_col() + theme_minimal()
+        ggplotly(trankPlot)})
     
-    
-
-})
+    # TaxonStatus
+    output$TStatus <- plotly::renderPlotly({
+        tstatusData <- bio %>%
+            group_by(taxonomicStatus) %>% 
+            summarise(Observaciones = count()) %>% 
+            arrange(desc(Observaciones))
+        
+        tstatusPlot <- tstatusData %>% 
+            ggplot(aes(x = taxonomicStatus, y = Observaciones)) +
+            geom_col() + theme_minimal()
+        ggplotly(tstatusPlot)})
+    })
