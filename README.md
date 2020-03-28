@@ -108,6 +108,10 @@ psql imibio
 create extension postgis
 ```  
 
+```shell script
+python manage.py migrate
+```
+Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)
 
 ### Importing initial data (GBIF and SNDB) to SQLite with pandas [not finished]  
 
