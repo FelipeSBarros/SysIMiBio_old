@@ -15,6 +15,38 @@ from SysIMiBio.biodiversity.models import Gbif
 
 # getting last table id
 
+def get_db_id(Model):
+    # Model = Gbif
+    #from django.db import connections
+    from django.db.models import Max
+    #if connections.databases["default"]["ENGINE"].endswith("psycopg2"):
+    maxId = Model.objects.aggregate(Max('id'))
+    return maxId['id__max']
+    #else:
+
+
+dbId = get_db_id(Gbif)
+dbId is None
+
+# reading dataset
+bio = pd.read_csv('./data/HeadOccurrence.csv', sep = '\t', keep_default_na=False, na_values=['None'])
+bio = bio.replace({'':None})
+
+#if dbId is None:
+if "id" in bio:
+    bio = bio.drop("id", 1)
+    # iterating over dataset and importing each
+#else:
+    #dbId += 1
+for item in bio.head(1).iterrows():
+    #item[1]["id"] = dbId
+    dict = item[1].to_dict()
+    Gbif.objects.create(**dict)
+
+
+
+
+# Not necessary anymore
 # IF USING SQLITE
 conn = sqlite3.connect('db.sqlite3')
 c = conn.cursor()
@@ -34,9 +66,9 @@ try:
     cursor = connection.cursor()
     # get last id from biodiversity_gbif table
     cursor.execute("SELECT max(id) from biodiversity_gbif;")
-    id = cursor.fetchone()
-    if id[0] is None:
-        print("ID is None. Setting it to 0")
+    id = cursor.fetchone()[0]
+    if id is None:
+        print("ID is None. No need to have id. Setting it to 0")
         id = 0
     else:
         print("ID is =", id)
@@ -48,14 +80,3 @@ finally:
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
-
-# reading dataset
-bio = pd.read_csv('./data/HeadOccurrence.csv', sep = '\t', keep_default_na=False, na_values=['None'])
-bio = bio.replace({'':None})
-
-# iterating over dataset and importing each
-for item in bio.head(1).iterrows():#.iteritems():
-    #id += 1
-    item[1]["id"] = id
-    dict = item[1].to_dict()#orient='records')
-    Gbif.objects.create(**dict)
