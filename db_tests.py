@@ -79,3 +79,9 @@ finally:
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
+
+# select max(id) from biodiversity_gbif;
+
+# select id, "gbifID" from biodiversity_gbif;
+
+# --DELETE FROM biodiversity_gbif ;
