@@ -29,54 +29,19 @@ dbId = get_db_id(Gbif)
 dbId is None
 
 # reading dataset
-bio = pd.read_csv('./data/HeadOccurrence.csv', sep = '\t', keep_default_na=False, na_values=['None'])
-bio = bio.replace({'':None})
-
-#if dbId is None:
-if "id" in bio:
-    bio = bio.drop("id", 1)
-    # iterating over dataset and importing each
-#else:
-    #dbId += 1
-for item in bio.head(1).iterrows():
-    #item[1]["id"] = dbId
-    dict = item[1].to_dict()
-    Gbif.objects.create(**dict)
-
-
-
-
-# Not necessary anymore
-# IF USING SQLITE
-conn = sqlite3.connect('db.sqlite3')
-c = conn.cursor()
-query = c.execute('SELECT max(id) FROM biodiversity_gbif')
-id = query.fetchall()[0][0]
-conn.close()
-
-# IF USING POSTGRESQL
-import psycopg2
-try:
-    connection = psycopg2.connect(user = config('DBUSER'),
-                                  password = config('DBPASSWORD'),
-                                  host = "localhost",
-                                  port = "5432",
-                                  database = "imibio")
-
-    cursor = connection.cursor()
-    # get last id from biodiversity_gbif table
-    cursor.execute("SELECT max(id) from biodiversity_gbif;")
-    id = cursor.fetchone()[0]
-    if id is None:
-        print("ID is None. No need to have id. Setting it to 0")
-        id = 0
-    else:
-        print("ID is =", id)
-except (Exception, psycopg2.Error) as error :
-    print ("Error while connecting to PostgreSQL", error)
-finally:
-    #closing database connection.
-        if(connection):
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
+chunksize = 10 ** 4
+filename = './data/occurrence.txt'
+for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=['None'], skiprows = lambda x: x in [1461549, 1470372], nrows=1000000, chunksize=chunksize):
+    bio = chunk.replace({'': None})
+    bio = bio.rename(columns={'class': 'clase'})
+    if "id" in bio:
+        bio = bio.drop("id", 1)
+    if "author_id" not in bio:
+        bio['author_id'] = 1
+    for item in bio.iterrows():
+        # item[1]["id"] = dbId
+        dict = item[1].to_dict()
+        #print(" Ate author_id", dict["author_id"])
+        Gbif.objects.create(**dict)
+# Had an error
+# django.db.utils.DataError: value too long for type character varying(254)
