@@ -94,8 +94,12 @@ The **CSV** file had to be modified, adding `id` and `author_id` fields at the b
 ./csv2sqlite-master/csv2sqlite.py ./data/HeadOccurrence.csv db.sqlite3 biodiversity_gbif
 ```
 
-## Geodatabase
-
+## PostGreSQL
+Installing module psycopg2. [More info, check this tutorial](https://djangocentral.com/using-postgresql-with-django/)  
+```
+pip install psycopg2
+```
+Instaling and creating database  
 ```
 sudo su
 su postgres
@@ -104,6 +108,10 @@ psql imibio
 create extension postgis
 ```  
 
+```shell script
+python manage.py migrate
+```
+Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)
 
 ### Importing initial data (GBIF and SNDB) to SQLite with pandas [not finished]  
 
