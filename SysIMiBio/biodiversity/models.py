@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.db import models
+from django.contrib.gis.db import models
 
 
 class Gbif(models.Model):
@@ -243,6 +243,8 @@ class Gbif(models.Model):
     lastCrawled = models.TextField(blank=True, null=True)
     repatriated = models.TextField(blank=True, null=True)
     relativeOrganismQuantity = models.TextField(blank=True, null=True)
+    geom_original = models.PointField(srid=4326, blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.acceptedScientificName}'

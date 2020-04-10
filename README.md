@@ -10,13 +10,13 @@ Repository of the development and implementation of the Biodiversity [Management
 # updte miniconda
 conda update -n base conda
 
-# creating and installing pythhon pacjages
+# creating and installing pythhon packages
 conda create -n sysimibio python django pandas geopandas
 
 # Saving environment requirements
 conda env export > environments.yml
 ```
-If runing from created requirement:  
+If running from created requirement:  
 
 ```shell script
 # Using requirements to create an environment
@@ -82,7 +82,79 @@ python manage.py makemigrations biodiversity
 python manage.py migrate biodiversity
 ```
 
-## Importing initial data (GBIF and SNDB) to SQLite  
+### PostGreSQL
+* Installing module psycopg2. [More info, check this tutorial](https://djangocentral.com/using-postgresql-with-django/)  
+```
+pip install psycopg2
+```
+
+* Installing and creating database [w/ GIS extension]  
+More information on [GeoDjango documentation](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/install/postgis/)  
+
+```python
+sudo su
+su postgres
+createdb imibio -T=GISTemplate
+```  
+
+* Create user
+```python
+psql imibio
+CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypass';
+# ALTER ROLE GeoAdmin SET client_encoding TO 'utf8';
+ALTER ROLE myuser SET default_transaction_isolation TO 'read committed';
+# ALTER ROLE GeoAdmin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE imibio TO myuser;
+\q
+exit
+exit
+```
+
+* Add user & password to .env
+`DATABASE_URL=sistema_db://user_db:password_db@localhost/db_name`
+
+* Using dj_database_url on setting.py
+```
+from dj_database_url import parse as db_url
+...
+DATABASES = {
+    'default': config('DATABASE_URL', cast=db_url),
+}
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+```
+
+* removing database  
+```
+sudo su
+su postgres
+psql
+DROP DATABSE imibio
+```
+
+* [GIS Models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)
+
+```python
+from django.contrib.gis.db import models
+# Not forget to add srid...
+```
+
+* making migrations
+```shell script
+python manage.py migrate
+```
+Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)
+
+#### GeoDjango models  
+
+[GeoDjango models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)
+
+# Tutorials  
+* [Herança de models](https://youtu.be/nlHfCt0HuGY?t=382)  
+* [from Regis video](https://www.youtube.com/watch?v=l7-lypZz95g)  
+
+# Importing initial data (GBIF and SNDB) 
+
+## to SQLite  
 Process done with [csv2sqlite](https://github.com/rufuspollock/csv2sqlite)  
 The **CSV** file had to be modified, adding `id` and `author_id` fields at the begining and at end, repectively;  
 
@@ -94,31 +166,6 @@ The **CSV** file had to be modified, adding `id` and `author_id` fields at the b
 ./csv2sqlite-master/csv2sqlite.py ./data/HeadOccurrence.csv db.sqlite3 biodiversity_gbif
 ```
 
-## PostGreSQL
-Installing module psycopg2. [More info, check this tutorial](https://djangocentral.com/using-postgresql-with-django/)  
-```
-pip install psycopg2
-```
-Instaling and creating database  
-```
-sudo su
-su postgres
-createdb imibio --template=GISTemplate
-psql imibio
-create extension postgis
-```  
+## to PostGreSQL [with pandas]  
 
-```shell script
-python manage.py migrate
-```
-Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)
-
-### Importing initial data (GBIF and SNDB) to SQLite with pandas [not finished]  
-
-[from Regis video](https://www.youtube.com/watch?v=l7-lypZz95g)  
-
-`pip install ipython[notebook]`  
-
-## Tutoriais  
-* [Herança de models](https://youtu.be/nlHfCt0HuGY?t=382)  
-* 
+*see* [ImportData.py](./ImportData.py)
