@@ -42,4 +42,7 @@ for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=
         # item[1]["id"] = dbId
         dict = item[1].to_dict()
         #print(" Ate author_id", dict["author_id"])
+
+        # http://blog.mathieu-leplatre.info/geodjango-maps-with-leaflet.html
+        #geom = Point(lng, lat)
         Gbif.objects.create(**dict)

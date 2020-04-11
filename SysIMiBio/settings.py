@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'SysIMiBio.wsgi.application'
 DATABASES = {
     'default': {
          'ENGINE': 'django.contrib.gis.db.backends.postgis',
-         'NAME': Csv('DBNAME'),
-         'USER': Csv('DBUSER'),
-         'PASSWORD': Csv('DBPASSWORD'),
+         'NAME': config('DBNAME'),
+         'USER': config('DBUSER'),
+         'PASSWORD': config('DBPASSWORD'),
          'HOST': 'localhost',
          'PORT': '',
     },
