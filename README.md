@@ -4,10 +4,18 @@ Repository of the development and implementation of the Biodiversity [Management
 
 ## Installing and setting up environment  
 
+### venv
+```buildoutcfg
+python3 -m venv .sysimibio
+source .sysimibio/bin/activate
+pip install -r requirements.txt
+pip install numpy
+sudo apt-get install libgdal-dev
+```
 ### Miniconda  
 
 ```shell script
-# updte miniconda
+# update miniconda
 conda update -n base conda
 
 # creating and installing pythhon packages
@@ -91,10 +99,19 @@ pip install psycopg2
 * Installing and creating database [w/ GIS extension]  
 More information on [GeoDjango documentation](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/install/postgis/)  
 
-```python
-sudo su
-su postgres
-createdb imibio -T=GISTemplate
+```
+# Criando template PostGIS
+sudo su - postgres
+psql
+# Criando DB GISTemplate
+CREATE DATABASE mygisdb;
+\q
+psql mygisdb
+# Dentro do PostGre na base de interesse
+-- Enable PostGIS (includes raster)
+CREATE EXTENSION postgis;
+\q
+exit
 ```  
 
 * Create user
@@ -142,7 +159,8 @@ from django.contrib.gis.db import models
 ```shell script
 python manage.py migrate
 ```
-Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)
+Then, repeat `makemigrations` and `migrate` for [django app](#creating-app);
+Don't forget to create superuser!  
 
 #### GeoDjango models  
 

@@ -78,11 +78,22 @@ WSGI_APPLICATION = 'SysIMiBio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+DATABASES = {
+    'default': {
+         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+         'NAME': Csv('DBNAME'),
+         'USER': Csv('DBUSER'),
+         'PASSWORD': Csv('DBPASSWORD'),
+         'HOST': 'localhost',
+         'PORT': '',
+    },
+}
+"""
 DATABASES = {
     'default': config('DATABASE_URL', cast=db_url),
 }
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+"""
 
 
 # Password validation

@@ -43,5 +43,3 @@ for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=
         dict = item[1].to_dict()
         #print(" Ate author_id", dict["author_id"])
         Gbif.objects.create(**dict)
-# Had an error
-# django.db.utils.DataError: value too long for type character varying(254)
