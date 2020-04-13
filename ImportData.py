@@ -43,17 +43,11 @@ for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=
         bio['author_id'] = 1
     for item in bio.iterrows():
         # item[1]["id"] = dbId
-        if item[1]["decimalLongitude"] is not None:
-            # pnt = GEOSGeometry('SRID=32140;POINT(954158.1 4215137.1)')
-            # pnt = Point(954158.1, 4215137.1, srid=32140)
-            # p = Point(item[1]["decimalLongitude"] + "," + item[1]["decimalLatitude"], srid=32140)
+        if item[1]["decimalLongitude"] is not None and item[1]["decimalLatitude"] is not None:
             item[1]['geom_original'] = GEOSGeometry(
-                "SRID=4326;POINT(" + item[1]["decimalLongitude"] + " " + item[1]["decimalLatitude"] + ")")
-            #print(item[1]['geom_original'])
+                "SRID=4326;POINT(" + str(item[1]["decimalLongitude"]) + " " + str(item[1]["decimalLatitude"]) + ")")
+        # converting to dict
         dict = item[1].to_dict()
 
-
-        # http://blog.mathieu-leplatre.info/geodjango-maps-with-leaflet.html
-        #geom = Point(lng, lat)
+        # commiting
         Gbif.objects.create(**dict)
-

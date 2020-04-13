@@ -166,7 +166,9 @@ DROP DATABSE imibio
 
 #### GeoDjango models  
 
-[GeoDjango models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)
+[GeoDjango models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)  
+[Django geom organization](http://blog.mathieu-leplatre.info/geodjango-maps-with-leaflet.html)  
+[automatic-spatial-transformations](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/tutorial/#automatic-spatial-transformations)  
 
 # Tutorials  
 * [Herança de models](https://youtu.be/nlHfCt0HuGY?t=382)  
