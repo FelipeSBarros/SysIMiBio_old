@@ -1,8 +1,9 @@
-from django.contrib.gis import admin
+from leaflet.admin import LeafletGeoAdmin
+from django.contrib import admin
 from .models import Gbif
 
 @admin.register(Gbif)
-class GbifAdmin(admin.GeoModelAdmin):
+class GbifAdmin(LeafletGeoAdmin):
     list_display = ('__str__',
                     "family",
                     'hasCoordinate',
