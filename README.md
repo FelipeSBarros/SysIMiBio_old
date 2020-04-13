@@ -140,14 +140,6 @@ DATABASES = {
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 ```
 
-* removing database  
-```
-sudo su
-su postgres
-psql
-DROP DATABSE imibio
-```
-
 * [GIS Models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)
 
 ```python
@@ -155,12 +147,22 @@ from django.contrib.gis.db import models
 # Not forget to add srid...
 ```
 
-* making migrations
+* Add [django.contrib.gis to INSTALLED_APPS](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/install/#add-django-contrib-gis-to-installed-apps)
+
+* Making migrations
 ```shell script
 python manage.py migrate
 ```
-Then, repeat `makemigrations` and `migrate` for [django app](#creating-app);
-Don't forget to create superuser!  
+
+Then, repeat `makemigrations` and `migrate` for [django app](#creating-app)... and don't forget to create superuser!  
+
+* removing database (if necessary)  
+```
+sudo su
+su postgres
+psql
+DROP DATABSE imibio
+```
 
 #### GeoDjango models  
 

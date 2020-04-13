@@ -1,8 +1,8 @@
-from django.contrib import admin
+from django.contrib.gis import admin
 from .models import Gbif
 
 @admin.register(Gbif)
-class GbifAdmin(admin.ModelAdmin):
+class GbifAdmin(admin.GeoModelAdmin):
     list_display = ('__str__',
                     "family",
                     'hasCoordinate',

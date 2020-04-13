@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'SysIMiBio.biodiversity',
     #Others app
     'django_extensions',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
