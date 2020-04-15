@@ -1,0 +1,12 @@
+body {
+    padding-top: 3.5rem;
+}
+
+#map {
+    margin-top: 0.5rem;
+    padding: 0;
+    width: 100%;
+    min-height: calc(100vh - 75px);
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+}

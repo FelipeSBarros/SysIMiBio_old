@@ -164,6 +164,10 @@ psql
 DROP DATABSE imibio
 ```
 
+### For the maps  
+
+Download [leaflet](https://leafletjs.com/download.html) and export to static, as suggested [here](https://github.com/marcellobenigno/geopocos/blob/master/docs/05-nosso-primeiro-mapa.md)  
+
 #### GeoDjango models  
 
 [GeoDjango models](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/model-api/)  
