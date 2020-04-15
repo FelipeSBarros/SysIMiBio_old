@@ -29,9 +29,10 @@ dbId = get_db_id(Gbif)
 dbId is None
 
 # reading dataset
-chunksize = 10 ** 4
+#chunksize = 10 ** 4
 chunksize = 1000
-filename = './data/occurrence.txt'
+#filename = './data/occurrence.txt'
+filename = './data/Head1kOccurrences.txt'
 for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=['None'], skiprows = lambda x: x in [1461549, 1470372],
                          #nrows=1000000
                          nrows=10000, chunksize=chunksize):
