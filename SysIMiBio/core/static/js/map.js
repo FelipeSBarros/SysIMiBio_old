@@ -9,7 +9,7 @@ var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}
 });
 
 var map = L.map('map', {
-    center: [-7.166300, -36.77673],
+    center: [-27, -55],
     zoom: 8,
     maxZoom: 20,
     layers: [gstreets],

@@ -3,5 +3,5 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
-def mapa(request):
-    return render(request, 'mapa.html')
+def vmapaSNDB(request):
+    return render(request, 'mapaSNDB.html')

@@ -47,13 +47,13 @@ INSTALLED_APPS = [
     'leaflet',
 ]
 
-LEAFLET_CONFIG = {
+#LEAFLET_CONFIG = {
     # conf here
-    'DEFAULT_CENTER': (-27, -55.0),
-    'DEFAULT_ZOOM': 8,
+#    'DEFAULT_CENTER': (-27, -55.0),
+#    'DEFAULT_ZOOM': 8,
     #'MIN_ZOOM': 3,
     #'MAX_ZOOM': 18,
-}
+#}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
