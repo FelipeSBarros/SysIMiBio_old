@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'libs/leaflet/leaflet.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+    <div id="map">
+    </div>
+    <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+    <script src="{% static 'js/map.js' %}"></script>
+
+{% endblock js %}
