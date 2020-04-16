@@ -8,3 +8,6 @@ def species_list(request):
         'object_list': objects
     }
     return render(request, template_name, context)
+
+def vmapaSNDB(request):
+    return render(request, 'mapaSNDB.html')

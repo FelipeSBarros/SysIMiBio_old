@@ -5,5 +5,4 @@ app_name = 'core'
 
 urlpatterns = [
     path('', v.index, name='index'),
-    path('mapaSNDB/', v.vmapaSNDB, name='mapaSNDB'),
 ]
