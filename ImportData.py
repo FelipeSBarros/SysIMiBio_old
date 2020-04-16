@@ -11,21 +11,17 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SysIMiBio.settings")
 django.setup()
 
 # importing model
-from SysIMiBio.biodiversity.models import Gbif
+from SysIMiBio.sndb.models import Occurrences
 
 # getting last table id
 
 def get_db_id(Model):
-    # Model = Gbif
-    #from django.db import connections
     from django.db.models import Max
-    #if connections.databases["default"]["ENGINE"].endswith("psycopg2"):
     maxId = Model.objects.aggregate(Max('id'))
     return maxId['id__max']
-    #else:
 
 
-dbId = get_db_id(Gbif)
+dbId = get_db_id(Occurrences)
 dbId is None
 
 # reading dataset
@@ -51,4 +47,4 @@ for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=
         dict = item[1].to_dict()
 
         # commiting
-        Gbif.objects.create(**dict)
+        Occurrences.objects.create(**dict)

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 
 
-class Gbif(models.Model):
+class Occurrences(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     gbifID = models.BigIntegerField(blank=True, null=True)
     abstract = models.TextField(blank=True, null=True)

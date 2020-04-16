@@ -1,6 +1,6 @@
 from import_export import resources
-from .models import gbif
+from .models import Occurrences
 
 class PersonResource(resources.ModelResource):
     class Meta:
-        model = gbif
+        model = Occurrences

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my apps
     'SysIMiBio.core',
-    'SysIMiBio.biodiversity',
+    'SysIMiBio.sndb',
     #Others app
     'django_extensions',
     'django.contrib.gis',

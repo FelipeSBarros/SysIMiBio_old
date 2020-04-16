@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h2><i class ="fa fa-pagelines"></i>Lista biodiversidad</h2>
+    <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
     {% if object_list %}
         <table class = 'table table-striped'>
             <thead>
@@ -28,7 +28,8 @@
             {% endfor %}
         </table>
     {% else %}
-        <p class="alert alert-warning">"Sem lista.</p>
+        <p class="alert alert-warning">
+            <i class="fa fa-warning"></i> Base de datos sin registros!</p>
     {% endif %}
 </div>
 {% endblock content %}

@@ -72,7 +72,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast = Csv())
 ```shell script
 cd SysIMiBio
 python manage.py startapp core
-python manage.py startapp biodivertsity
+python manage.py startapp sndb
 ```
 
 **After creating database model, add it to `INSTALLED_APPS` and apply migrations.**  
@@ -85,9 +85,9 @@ python manage.py startapp biodivertsity
 
 ```shell script
 # creating tables
-python manage.py makemigrations biodiversity
+python manage.py makemigrations sndb
 # Making migrations
-python manage.py migrate biodiversity
+python manage.py migrate sndb
 ```
 
 ### PostGreSQL
@@ -104,9 +104,9 @@ More information on [GeoDjango documentation](https://docs.djangoproject.com/en/
 sudo su - postgres
 psql
 # Criando DB GISTemplate
-CREATE DATABASE mygisdb;
+CREATE DATABASE imibio;
 \q
-psql mygisdb
+psql imibio
 # Dentro do PostGre na base de interesse
 -- Enable PostGIS (includes raster)
 CREATE EXTENSION postgis;
@@ -115,7 +115,7 @@ exit
 ```  
 
 * Create user
-```python
+```
 psql imibio
 CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypass';
 # ALTER ROLE GeoAdmin SET client_encoding TO 'utf8';
@@ -180,7 +180,7 @@ Download [leaflet](https://leafletjs.com/download.html) and export to static, as
 
 # Importing initial data (GBIF and SNDB) 
 
-## to SQLite  
+## to SQLite (DEPRECATED)  
 Process done with [csv2sqlite](https://github.com/rufuspollock/csv2sqlite)  
 The **CSV** file had to be modified, adding `id` and `author_id` fields at the begining and at end, repectively;  
 
@@ -188,8 +188,8 @@ The **CSV** file had to be modified, adding `id` and `author_id` fields at the b
 #See how it works
 ./csv2sqlite-master/csv2sqlite.py -h
 
-#executign importion
-./csv2sqlite-master/csv2sqlite.py ./data/HeadOccurrence.csv db.sqlite3 biodiversity_gbif
+# Importing data
+./csv2sqlite-master/csv2sqlite.py ./data/HeadOccurrence.csv db.sqlite3 sndb_occurrences
 ```
 
 ## to PostGreSQL [with pandas]  

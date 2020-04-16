@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import Gbif
+from .models import Occurrences
 
 def species_list(request):
     template_name = 'species_list.html'
-    objects = Gbif.objects.all()
+    objects = Occurrences.objects.all()
     context = {
         'object_list': objects
     }
