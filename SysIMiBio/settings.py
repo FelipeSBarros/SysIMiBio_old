@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django.contrib.gis',
     'leaflet',
+    'djgeojson',
 ]
 
 #LEAFLET_CONFIG = {
