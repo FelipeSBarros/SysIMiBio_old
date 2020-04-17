@@ -4,7 +4,7 @@ from .models import Occurrences
 from djgeojson.views import GeoJSONLayerView
 
 def species_list(request):
-    template_name = 'species_list.html'
+    template_name = 'occs_list.html'
     objects = Occurrences.objects.all()
     paginator = Paginator(objects, 25)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
