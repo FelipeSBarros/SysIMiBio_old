@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand disabled" href="">IMiBio</a>
+    <span class="navbar-brand disabled">IMiBio</span>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,6 +10,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'core:index' %}"> Início <span class="sr-only">(current)</span></a>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Datos SNDB</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -20,10 +22,12 @@
                         <i class="fa fa-bar-chart"></i> Estadísticas</a>
                 </div>
             </li>
+
             <!--
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li> -->
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Datos IMiBio</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
