@@ -15,7 +15,7 @@ def vmapaSNDB(request):
 
 class OccurrencesGeoJson(GeoJSONLayerView):
     model = Occurrences
-    properties = ('popup_content', 'popup_links')
+    properties = ('popup_content',)
 
     def get_queryset(self):
         context = Occurrences.objects.extra(select={'geom':'geom_original'})#filter(

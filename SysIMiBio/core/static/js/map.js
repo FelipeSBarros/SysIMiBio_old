@@ -1,3 +1,8 @@
+function onEachFeature(feature, layer) {
+    var popupContent = feature.properties.popup_content;
+    layer.bindPopup(popupContent);
+}
+
 var gstreets = L.tileLayer('http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}', {
     maxZoom: 20,
     attribution: 'google'
@@ -13,7 +18,7 @@ var myStyle = {
         weight: 2,
         opacity: 1,
         color: '#000000',
-        fillOpacity: 1
+        fillOpacity: 0.6
 };
 
 var occurrences = L.geoJson([], {
@@ -21,6 +26,7 @@ var occurrences = L.geoJson([], {
     pointToLayer: function (feature, latlng) {
         return new L.CircleMarker(latlng, {radius: 4});
     },
+     onEachFeature: onEachFeature,
 });
 
 var occs_url = $("#occs_geojson").val();

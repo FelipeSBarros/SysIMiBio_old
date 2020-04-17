@@ -248,3 +248,18 @@ class Occurrences(models.Model):
 
     def __str__(self):
         return f'{self.acceptedScientificName}'
+
+    @property
+    def popup_content(self):
+        popup = "<span>Nombre científico: </span>{}".format(
+            self.scientificName)
+        popup += "<span>Familia: </span>{}".format(
+            self.family)
+        popup += "<span>Municipio: </span>{}".format(
+            self.municipality)
+        popup += "<span>Localidad: </span>{}".format(
+            self.locality)
+        popup += "<span>Incertindumbre posicional: </span>{}".format(
+            self.coordinateUncertaintyInMeters)
+
+        return popup

@@ -6,3 +6,8 @@
     border: 1px solid #cfcfcf;
     border-radius: 8px;
 }
+
+.leaflet-popup-content span {
+    display: block;
+    font-weight: bold;
+}
