@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="page-header">
     <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
     {% if object_list %}
         <table class = 'table table-striped'>
@@ -16,7 +15,7 @@
             </tr>
             </thead>
 
-            {% for object in object_list %}
+            {% for object in page_obj %}
             <tr>
                 <td>{{ object.scientificName }}</td>
                 <td>{{ object.Family }}</td>
@@ -31,5 +30,23 @@
         <p class="alert alert-warning">
             <i class="fa fa-warning"></i> Base de datos sin registros!</p>
     {% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; início </a>
+            <a href="?page={{ page_obj.previous_page_number }}"> anterior </a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"> próximo </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"> último  &raquo;</a>
+        {% endif %}
+        </span>
 </div>
+
 {% endblock content %}

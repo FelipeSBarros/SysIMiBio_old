@@ -1,12 +1,17 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from .models import Occurrences
 from djgeojson.views import GeoJSONLayerView
 
 def species_list(request):
     template_name = 'species_list.html'
     objects = Occurrences.objects.all()
+    paginator = Paginator(objects, 25)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'object_list': objects
+        'object_list': objects,
+        'page_obj': page_obj,
     }
     return render(request, template_name, context)
 
