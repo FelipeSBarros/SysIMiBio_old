@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.urls import reverse_lazy
 
 
 class Occurrences(models.Model):
@@ -248,6 +249,9 @@ class Occurrences(models.Model):
 
     def __str__(self):
         return f'{self.acceptedScientificName}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('sndb:occ_details', kwargs={'pk': self.pk})
 
     @property
     def popup_content(self):

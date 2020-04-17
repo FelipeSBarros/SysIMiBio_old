@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from .models import Occurrences
 from djgeojson.views import GeoJSONLayerView
 
-def species_list(request):
+def occs_list(request):
     template_name = 'occs_list.html'
     objects = Occurrences.objects.all()
     paginator = Paginator(objects, 25)  # Show 25 contacts per page.
@@ -12,6 +12,14 @@ def species_list(request):
     context = {
         'object_list': objects,
         'page_obj': page_obj,
+    }
+    return render(request, template_name, context)
+
+def occs_details(request, pk):
+    template_name = 'occs_details.html'
+    occ = Occurrences.objects.extra(select={'geom': 'geom_original'}).get(pk=pk)
+    context = {
+        'occ_detail': occ,
     }
     return render(request, template_name, context)
 

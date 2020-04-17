@@ -17,7 +17,9 @@
 
             {% for object in page_obj %}
             <tr>
-                <td>{{ object.scientificName }}</td>
+                <td>
+                    <a href="{{ object.get_absolute_url }}">{{ object.scientificName }}</a>
+                </td>
                 <td>{{ object.Family }}</td>
                 <td>{{ object.hasCoordinate }}</td>
                 <td>{{ object.county }}</td>

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'libs/leaflet/leaflet.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block content %}
+
+<a href="{% url 'sndb:species_list' %}"> voltar </a>
+
+<h1>Detalles de la ocorrencia: {{ occ_detail.scientificName }}</h1>
+<strong>id: {{ occ_detail.pk }}</strong>
+
+<div class="col-sm-6">
+    <table class = "table table-user-information">
+        <tbody>
+        <tr>
+            <th class="text-right">Nombre scientifico</th>
+            <td>{{ occ_detail.scientificName }}</td>
+        </tr>
+
+            <th class="text-right">Familia</th>
+            <td>{{ occ_detail.family }}</td>
+        </tr>
+            <th class="text-right">Posee coordenadas?</th>
+            <td>{{ occ_detail.hasCoordinate }}</td>
+        </tr>
+            <th class="text-right">Departamento</th>
+            <td>{{ occ_detail.county }}</td>
+        </tr>
+            <th class="text-right">Municipalidad</th>
+            <td>{{ occ_detail.municipality }}</td>
+        </tr>
+            <th class="text-right">Localidad</th>
+            <td>{{ occ_detail.localilty }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <input type="hidden" id="y_cen" value="{{ occ_detail.geom.y|safe }}">
+    <input type="hidden" id="x_cen" value="{{ occ_detail.geom.x|safe }}">
+</div>
+<div class="col-md-6">
+            <div id="map-detail"></div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+    <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+
+    <script>
+
+        var y_cen = $("#y_cen").val();
+        var x_cen = $("#x_cen").val();
+
+        var gstreets = L.tileLayer('http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            attribution: 'google'
+        });
+
+        var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            attribution: 'google'
+        });
+
+        var occ = L.marker([y_cen, x_cen]);
+
+        var map = L.map('map-detail', {
+            center: [y_cen, x_cen],
+            zoom: 17,
+            layers: [gstreets, occ],
+        });
+
+        var baseLayers = {
+            "Google Streets": gstreets,
+            "Google Satélite": satellite,
+        };
+
+        var overlays = {
+            "Ocurrencia": occ,
+        };
+
+        var control = L.control.layers(baseLayers, overlays).addTo(map);
+
+    </script>
+
+{% endblock extra_js %}
