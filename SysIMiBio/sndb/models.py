@@ -265,5 +265,6 @@ class Occurrences(models.Model):
             self.locality)
         popup += "<span>Incertindumbre posicional: </span>{}".format(
             self.coordinateUncertaintyInMeters)
+        popup += f"<span><a href={ self.get_absolute_url()}>Informações Adicionais</a></strong><br>"
 
         return popup

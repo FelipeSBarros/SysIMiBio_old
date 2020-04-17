@@ -11,3 +11,12 @@
     display: block;
     font-weight: bold;
 }
+
+#map-detail {
+    margin-top: 0.5rem;
+    padding: 0;
+    width: 100%;
+    min-height: calc(100vh - 180px);
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+}

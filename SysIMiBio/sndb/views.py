@@ -17,7 +17,8 @@ def occs_list(request):
 
 def occs_details(request, pk):
     template_name = 'occs_details.html'
-    occ = Occurrences.objects.extra(select={'geom': 'geom_original'}).get(pk=pk)
+    occ = Occurrences.objects.get(pk=pk)
+    print(occ.geom_original.x)
     context = {
         'occ_detail': occ,
     }

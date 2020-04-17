@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_css %}
+{% block css %}
     <link href="{% static 'libs/leaflet/leaflet.css' %}" rel="stylesheet">
-{% endblock extra_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+{% endblock css %}
 
 {% block content %}
 
@@ -11,8 +12,8 @@
 
 <h1>Detalles de la ocorrencia: {{ occ_detail.scientificName }}</h1>
 <strong>id: {{ occ_detail.pk }}</strong>
-
-<div class="col-sm-6">
+<div class="row">
+<div class="col-sm-4">
     <table class = "table table-user-information">
         <tbody>
         <tr>
@@ -37,15 +38,16 @@
         </tr>
         </tbody>
     </table>
-
-    <input type="hidden" id="y_cen" value="{{ occ_detail.geom.y|safe }}">
-    <input type="hidden" id="x_cen" value="{{ occ_detail.geom.x|safe }}">
 </div>
-<div class="col-md-6">
-            <div id="map-detail"></div>
+
+<div class="col-sm-8">
+    <input type="hidden" id="y_cen" value="{{ occ_detail.geom_original.y|safe }}">
+    <input type="hidden" id="x_cen" value="{{ occ_detail.geom_original.x|safe }}">
+    <div id="map-detail"></div>
+</div>
 </div>
 {% endblock content %}
-{% block extra_js %}
+{% block js %}
     <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
 
     <script>
@@ -59,29 +61,27 @@
         });
 
         var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
-            maxZoom: 20,
-            attribution: 'google'
-        });
+        maxZoom: 20,
+        attribution: 'google'});
 
         var occ = L.marker([y_cen, x_cen]);
 
         var map = L.map('map-detail', {
             center: [y_cen, x_cen],
-            zoom: 17,
-            layers: [gstreets, occ],
+            zoom: 9,
+            layers: [gstreets, satellite, occ],
         });
 
         var baseLayers = {
-            "Google Streets": gstreets,
-            "Google Satélite": satellite,
+            "Google Streets": gstreets, satellite,
         };
 
         var overlays = {
-            "Ocurrencia": occ,
+            "Ocorrencia": occ,
         };
 
         var control = L.control.layers(baseLayers, overlays).addTo(map);
 
     </script>
 
-{% endblock extra_js %}
+{% endblock js %}
