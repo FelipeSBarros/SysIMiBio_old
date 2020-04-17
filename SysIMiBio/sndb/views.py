@@ -35,4 +35,4 @@ def occs(request):
     context = {
         'occs': occsHeat,
     }
-    return render(request, 'occs_list.html', context)
+    return render(request, 'occs_js.html', context)
