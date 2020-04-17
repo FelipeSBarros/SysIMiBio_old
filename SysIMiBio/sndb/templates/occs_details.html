@@ -40,18 +40,21 @@
     </table>
 </div>
 
-<div class="col-sm-8">
-    <input type="hidden" id="y_cen" value="{{ occ_detail.geom_original.y|safe }}">
-    <input type="hidden" id="x_cen" value="{{ occ_detail.geom_original.x|safe }}">
-    <div id="map-detail"></div>
-</div>
+
+    {% if occ_detail.geom_original %}
+    <div class="col-sm-8">
+        <input type="hidden" id="y_cen" value="{{ occ_detail.geom_original.y|safe }}">
+        <input type="hidden" id="x_cen" value="{{ occ_detail.geom_original.x|safe }}">
+        <div id="map-detail"></div>
+    </div>
+    {% endif %}
+
 </div>
 {% endblock content %}
 {% block js %}
     <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
 
     <script>
-
         var y_cen = $("#y_cen").val();
         var x_cen = $("#x_cen").val();
 
