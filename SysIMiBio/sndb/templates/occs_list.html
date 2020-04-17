@@ -1,0 +1,5 @@
+var occsCoord = [
+{% for occ in occs %}
+    [{{ occ.geom_original.y|safe }}, {{ occ.geom_original.x|safe}}, {{1}}],
+{% endfor %}
+];

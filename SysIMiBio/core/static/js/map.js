@@ -36,15 +36,23 @@ $.getJSON(occs_url, function (data) {
     occurrences.addData(data);
 })
 
+var heat = L.heatLayer(occsCoord, {
+    radius: 22,
+    blur: 30,
+    max: 1,
+    minOpacity: 0.7
+});
+
 var map = L.map('map', {
     center: [-27, -55],
     zoom: 8,
     maxZoom: 20,
-    layers: [gstreets, occurrences],
+    layers: [gstreets, occurrences, heat],
 });
 
 var overlays = {
     "occurrences":occurrences,
+    "Mapa caliente":heat,
 };
 
 var baseLayers = {

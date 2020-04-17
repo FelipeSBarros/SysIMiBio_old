@@ -24,3 +24,10 @@ class OccurrencesGeoJson(GeoJSONLayerView):
         return context
 
 occs_geojson = OccurrencesGeoJson.as_view()
+
+def occs(request):
+    occsHeat = Occurrences.objects.filter(decimalLatitude__isnull=False, decimalLongitude__isnull=False)
+    context = {
+        'occs': occsHeat,
+    }
+    return render(request, 'occs_list.html', context)

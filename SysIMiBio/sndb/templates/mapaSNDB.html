@@ -10,10 +10,12 @@
     <div id="map">
     </div>
     <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
+    <input type="hidden" id="occsCoord" value="{% url 'sndb:occsList' %}">
 {% endblock content %}
 
 {% block js %}
     <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+    <script src="{% static 'libs/leaflet-heat/leaflet-heat.js' %}"></script>
+    <script src="{% url 'sndb:occsList' %}"></script>
     <script src="{% static 'js/map.js' %}"></script>
-
 {% endblock js %}
