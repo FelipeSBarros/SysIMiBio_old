@@ -251,7 +251,7 @@ class Occurrences(models.Model):
         return f'{self.acceptedScientificName}'
 
     def get_absolute_url(self):
-        return reverse_lazy('sndb:occ_details', kwargs={'pk': self.pk})
+        return reverse_lazy('sndb:occ_detail', kwargs={'pk': self.pk})
 
     @property
     def popup_content(self):
@@ -265,6 +265,6 @@ class Occurrences(models.Model):
             self.locality)
         popup += "<span>Incertindumbre posicional: </span>{}".format(
             self.coordinateUncertaintyInMeters)
-        popup += f"<span><a href={ self.get_absolute_url()}>Informações Adicionais</a></strong><br>"
+        popup += f"<span><a href={ self.get_absolute_url()}>Detalles de la occurrencia</a></strong><br>"
 
         return popup

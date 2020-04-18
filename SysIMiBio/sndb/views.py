@@ -15,7 +15,7 @@ def occs_list(request):
     }
     return render(request, template_name, context)
 
-def occs_details(request, pk):
+def occ_detail(request, pk):
     template_name = 'occs_details.html'
     occ = Occurrences.objects.get(pk=pk)
     #print(occ.geom_original.x)
@@ -24,8 +24,8 @@ def occs_details(request, pk):
     }
     return render(request, template_name, context)
 
-def vmapaSNDB(request):
-    return render(request, 'mapaSNDB.html')
+def occs_map(request):
+    return render(request, 'occs_mapSNDB.html')
 
 class OccurrencesGeoJson(GeoJSONLayerView):
     model = Occurrences
