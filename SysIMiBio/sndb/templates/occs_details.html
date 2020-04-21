@@ -17,25 +17,123 @@
     <table class = "table table-user-information">
         <tbody>
         <tr>
+
             <th class="text-right">Nombre scientifico</th>
             <td>{{ occ_detail.scientificName }}</td>
+        </tr>
+
+            <th class="text-right">Id de la Ocurencia</th>
+            <td>{{ occ_detail.occurrenceID }}</td>
+        </tr>
+
+            <th class="text-right">Modificado</th>
+            <td>{{ occ_detail.modified }}</td>
+        </tr>
+
+            <th class="text-right">Basis of record</th>
+            <td>{{ occ_detail.basisOfRecord }}</td>
+        </tr>
+
+            <th class="text-right">ID Institución</th>
+            <td>{{ occ_detail.institutionCode }}</td>
+        </tr>
+
+            <th class="text-right">ID Colección</th>
+            <td>{{ occ_detail.collectionCode }}</td>
+        </tr>
+
+            <th class="text-right">ID Catálogo</th>
+            <td>{{ occ_detail.catalogNumber }}</td>
+        </tr>
+
+            <th class="text-right">Reino</th>
+            <td>{{ occ_detail.kingdom }}</td>
+        </tr>
+
+            <th class="text-right">Phylum</th>
+            <td>{{ occ_detail.phylum }}</td>
+        </tr>
+
+            <th class="text-right">Clase</th>
+            <td>{{ occ_detail.clase }}</td>
+        </tr>
+
+            <th class="text-right">Orden</th>
+            <td>{{ occ_detail.order }}</td>
         </tr>
 
             <th class="text-right">Familia</th>
             <td>{{ occ_detail.family }}</td>
         </tr>
-            <th class="text-right">Posee coordenadas?</th>
-            <td>{{ occ_detail.hasCoordinate }}</td>
+
+            <th class="text-right">Genero</th>
+            <td>{{ occ_detail.genus }}</td>
         </tr>
+
+            <th class="text-right">Epíteto</th>
+            <td>{{ occ_detail.specificEpithet }}</td>
+        </tr>
+
+            <th class="text-right">Epíteto infraespecífico</th>
+            <td>{{ occ_detail.infraspecificEpithet }}</td>
+        </tr>
+
+            <th class="text-right">Taxon rank</th>
+            <td>{{ occ_detail.taxonRank }}</td>
+        </tr>
+
+            <th class="text-right">Autor del nombre científico y año de publicación</th>
+            <td>{{ occ_detail.scientificNameAuthorship }}</td>
+        </tr>
+
+            <th class="text-right">Calificador de la identificación</th>
+            <td>{{ occ_detail.identificationQualifier }}</td>
+        </tr>
+
+            <th class="text-right">Colector</th>
+            <td>{{ occ_detail.recordedBy }}</td>
+        </tr>
+
+            <th class="text-right">Número de registro del colector</th>
+            <td>{{ occ_detail.recordNumber }}</td>
+        </tr>
+
             <th class="text-right">Departamento</th>
             <td>{{ occ_detail.county }}</td>
         </tr>
+
+            <th class="text-right">Provincia o Estado</th>
+            <td>{{ occ_detail.stateProvince }}</td>
+        </tr>
+
             <th class="text-right">Municipalidad</th>
             <td>{{ occ_detail.municipality }}</td>
         </tr>
+
             <th class="text-right">Localidad</th>
             <td>{{ occ_detail.localilty }}</td>
         </tr>
+
+            <th class="text-right">Longitude</th>
+            <td>{{ occ_detail.decimalLongitude }}</td>
+        </tr>
+
+            <th class="text-right">Latitude</th>
+            <td>{{ occ_detail.decimalLatitude }}</td>
+        </tr>
+
+            <th class="text-right">Incertidunbre de las coordenadas</th>
+            <td>{{ occ_detail.coordinateUncartaintyInMeters }}</td>
+        </tr>
+
+            <th class="text-right">Protocolo de georeferenciación</th>
+            <td>{{ occ_detail.georeferenceProtocol }}</td>
+        </tr>
+
+            <th class="text-right">Fuentes de georeferenciación</th>
+            <td>{{ occ_detail.georeferenceSources }}</td>
+        </tr>
+
         </tbody>
     </table>
 </div>
