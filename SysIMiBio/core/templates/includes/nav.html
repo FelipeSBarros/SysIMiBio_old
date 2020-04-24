@@ -31,19 +31,23 @@
                     <a class="dropdown-item disabled" href="#">Something else here</a>
                 </div>
             </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a role="button" class="btn btn-danger" href="{% url 'logout' %}"> Salir </a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a  role="button" class="btn navbar-btn btn-success" href="{% url 'login' %}"> Login </a>
-            </li>
-            {% endif %}
         </ul>
         <!--<form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>-->
+        </for\m>-->
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a role="button" class="btn btn-danger" href="{% url 'logout' %}">
+                    <span></span><span class="fa fa-sign-in"></span> Salir </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a  role="button" class="btn navbar-btn btn-success" href="{% url 'login' %}">
+                    <span class="fa fa-user"></span> Login </a>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>

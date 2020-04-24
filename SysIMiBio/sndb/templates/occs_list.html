@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="col-md-8">
-    <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
     {% if user.is_authenticated %}
+        <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
         {% if object_list %}
             <table class = 'table table-striped'>
                 <thead>
@@ -57,7 +57,9 @@
 
         {% endif %}
     {% else %}
-        <h1>Acceso negado. Logar o crear usuário</h1>
+        <div class="alert alert-danger" role="alert">
+            Acceso negado. Logar o crear usuário.
+        </div>
     {% endif %}
 
 {% endblock content %}

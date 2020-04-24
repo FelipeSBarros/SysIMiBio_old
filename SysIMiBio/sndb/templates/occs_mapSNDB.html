@@ -13,7 +13,9 @@
         <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
         <input type="hidden" id="occsCoord" value="{% url 'sndb:occsList' %}">
     {% else %}
-        <h1>Acceso negado. Logar o crear usuário</h1>
+        <div class="alert alert-danger" role="alert">
+            Acceso negado. Logar o crear usuário.
+        </div>
     {% endif %}
 {% endblock content %}
 
