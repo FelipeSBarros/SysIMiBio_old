@@ -23,11 +23,6 @@
                 </div>
             </li>
 
-            <!--
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li> -->
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Datos IMiBio</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -36,6 +31,15 @@
                     <a class="dropdown-item disabled" href="#">Something else here</a>
                 </div>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a role="button" class="btn btn-danger" href="{% url 'logout' %}"> Salir </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a  role="button" class="btn navbar-btn btn-success" href="{% url 'login' %}"> Login </a>
+            </li>
+            {% endif %}
         </ul>
         <!--<form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

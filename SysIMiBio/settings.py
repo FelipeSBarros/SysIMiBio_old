@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # my apps
     'SysIMiBio.core',
     'SysIMiBio.sndb',
+    'accounts.apps.AccountsConfig',  # https://learndjango.com/tutorials/django-signup-tutorial
     #Others app
     'django_extensions',
     'django.contrib.gis',
@@ -145,3 +146,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

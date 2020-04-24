@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- templates/registration/login.html -->
+<div class="col-sm-8">
+<h2>Login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success"> Acceder </button>
+</form>
+</div>
+<di class="col-sm-8">
+  <p><strong>No posee usuário?</strong></p>
+  <a role="button" class="btn btn-warning" href="{% url 'signup' %}"> Crear usuario </a>
+</di>
+{% endblock content %}

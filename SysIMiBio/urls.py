@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('SysIMiBio.core.urls')),
+    path('', include('SysIMiBio.core.urls'), name='home'),
+    path('accounts/', include('accounts.urls')),  # https://learndjango.com/tutorials/django-signup-tutorial
+    path('accounts/', include('django.contrib.auth.urls')),
     path('sndb/', include('SysIMiBio.sndb.urls')),
     path('admin/', admin.site.urls),
 ]

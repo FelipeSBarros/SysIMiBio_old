@@ -7,10 +7,14 @@
 {% endblock css %}
 
 {% block content %}
-    <div id="map">
-    </div>
-    <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
-    <input type="hidden" id="occsCoord" value="{% url 'sndb:occsList' %}">
+    {% if user.is_authenticated %}
+        <div id="map">
+        </div>
+        <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
+        <input type="hidden" id="occsCoord" value="{% url 'sndb:occsList' %}">
+    {% else %}
+        <h1>Acceso negado. Logar o crear usuário</h1>
+    {% endif %}
 {% endblock content %}
 
 {% block js %}

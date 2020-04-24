@@ -3,40 +3,40 @@
 {% block content %}
 <div class="col-md-8">
     <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
-    {% if object_list %}
-        <table class = 'table table-striped'>
-            <thead>
-            <tr>
-                <th>Nombre scientifico</th>
-                <th>Familia</th>
-                <th>Posee coordenadas?</th>
-                <th>Departamento</th>
-                <th>Taxon rank</th>
-                <th>Municipalidad</th>
-                <th>Localidad</th>
-            </tr>
-            </thead>
+    {% if user.is_authenticated %}
+        {% if object_list %}
+            <table class = 'table table-striped'>
+                <thead>
+                <tr>
+                    <th>Nombre scientifico</th>
+                    <th>Familia</th>
+                    <th>Posee coordenadas?</th>
+                    <th>Departamento</th>
+                    <th>Taxon rank</th>
+                    <th>Municipalidad</th>
+                    <th>Localidad</th>
+                </tr>
+                </thead>
 
-            {% for object in page_obj %}
-            <tr>
-                <td>
-                    <a href="{{ object.get_absolute_url }}">{{ object.scientificName }}</a>
-                </td>
-                <td>{{ object.Family }}</td>
-                <td>{{ object.hasCoordinate }}</td>
-                <td>{{ object.county }}</td>
-                <td>{{ object.taxonRank }}</td>
-                <td>{{ object.municipality }}</td>
-                <td>{{ object.localilty }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p class="alert alert-warning">
-            <i class="fa fa-warning"></i> Base de datos sin registros!</p>
-    {% endif %}
+                {% for object in page_obj %}
+                <tr>
+                    <td>
+                        <a href="{{ object.get_absolute_url }}">{{ object.scientificName }}</a>
+                    </td>
+                    <td>{{ object.Family }}</td>
+                    <td>{{ object.hasCoordinate }}</td>
+                    <td>{{ object.county }}</td>
+                    <td>{{ object.taxonRank }}</td>
+                    <td>{{ object.municipality }}</td>
+                    <td>{{ object.localilty }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="alert alert-warning">
+                <i class="fa fa-warning"></i> Base de datos sin registros!</p>
 
-<div class="pagination">
+            <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a class="btn btn-success" href="?page=1" role="button"> Início </a>
@@ -53,5 +53,11 @@
         {% endif %}
         </span>
 </div>
-</div>
+            </div>
+
+        {% endif %}
+    {% else %}
+        <h1>Acceso negado. Logar o crear usuário</h1>
+    {% endif %}
+
 {% endblock content %}
