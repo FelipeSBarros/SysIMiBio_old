@@ -32,30 +32,30 @@
                 </tr>
                 {% endfor %}
             </table>
+
+    <div class="pagination">
+    <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-success" href="?page=1" role="button"> Início </a>
+                <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}" role="button"> Anterior </a>
+            {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}" role="button"> Próximo </a>
+                <a class="btn btn-danger" href="?page={{ page_obj.paginator.num_pages }}" role="button"> Último </a>
+            {% endif %}
+                </span>
+    </div>
         {% else %}
             <p class="alert alert-warning">
-                <i class="fa fa-warning"></i> Base de datos sin registros!</p>
-
-            <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a class="btn btn-success" href="?page=1" role="button"> Início </a>
-            <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}" role="button"> Anterior </a>
+            <i class="fa fa-warning"></i> Base de datos sin registros!</p>
         {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}" role="button"> Próximo </a>
-            <a class="btn btn-danger" href="?page={{ page_obj.paginator.num_pages }}" role="button"> Último </a>
-        {% endif %}
-        </span>
 </div>
-            </div>
 
-        {% endif %}
     {% else %}
         <div class="alert alert-danger" role="alert">
             Acceso negado. Logar o crear usuário.
