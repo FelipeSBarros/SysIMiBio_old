@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-8">
+    {% if user.is_authenticated %}
+        <h2><i class ="fa fa-pagelines"></i> Lista biodiversidad</h2>
+        {% if object_list %}
+            <table class = 'table table-striped'>
+                <thead>
+                <tr>
+                    <th>Nombre scientifico</th>
+                    <th>Familia</th>
+                    <th>Posee coordenadas?</th>
+                    <th>Departamento</th>
+                    <th>Taxon rank</th>
+                    <th>Municipalidad</th>
+                    <th>Localidad</th>
+                </tr>
+                </thead>
+
+                {% for object in page_obj %}
+                <tr>
+                    <td>
+                        <a href="{{ object.get_absolute_url }}">{{ object.scientificName }}</a>
+                    </td>
+                    <td>{{ object.Family }}</td>
+                    <td>{{ object.hasCoordinate }}</td>
+                    <td>{{ object.county }}</td>
+                    <td>{{ object.taxonRank }}</td>
+                    <td>{{ object.municipality }}</td>
+                    <td>{{ object.locality }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item disabled">
+                    <li class="page-item"><a class="page-link" href="?page=1"> Início</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> {{ page_obj.previous_page_number }} </a></li>
+            {% endif %}
+            <span class="current">
+                <li class="page-item active">
+                  <a class="page-link" href="#"> {{ page_obj.number }} <span class="sr-only">(current)</span></a>
+                </li>
+            </span>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"> {{ page_obj.next_page_number }} </a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> Ultimo </a></li>
+            {% endif %}
+        </ul>
+    </nav>
+        {% else %}
+            <p class="alert alert-warning">
+            <i class="fa fa-warning"></i> Base de datos sin registros!</p>
+        {% endif %}
+</div>
+
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            Acceso negado. Logar o crear usuário.
+        </div>
+    {% endif %}
+
+{% endblock content %}

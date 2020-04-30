@@ -41,12 +41,13 @@ INSTALLED_APPS = [
     # my apps
     'SysIMiBio.core',
     'SysIMiBio.sndb',
-    'accounts.apps.AccountsConfig',  # https://learndjango.com/tutorials/django-signup-tutorial
+    'SysIMiBio.imibio',
     #Others app
     'django_extensions',
     'django.contrib.gis',
     'leaflet',
     'djgeojson',
+    'accounts.apps.AccountsConfig',  # https://learndjango.com/tutorials/django-signup-tutorial
 ]
 
 #LEAFLET_CONFIG = {

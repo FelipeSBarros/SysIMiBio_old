@@ -22,4 +22,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('sndb/', include('SysIMiBio.sndb.urls')),
     path('admin/', admin.site.urls),
+    path('imibio/', include('SysIMiBio.imibio.urls')),
 ]
