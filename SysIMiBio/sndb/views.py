@@ -5,8 +5,8 @@ from djgeojson.views import GeoJSONLayerView
 
 def occs_list(request):
     template_name = 'occs_list.html'
-    objects = Occurrences.objects.all()
-    paginator = Paginator(objects, 25)  # Show 25 contacts per page.
+    objects = Occurrences.objects.all()#values('scientificName', 'family', 'hasCoordinate', 'county', 'taxonRank', 'municipality', 'locality', 'pk')
+    paginator = Paginator(objects, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -18,7 +18,6 @@ def occs_list(request):
 def occ_detail(request, pk):
     template_name = 'occs_details.html'
     occ = Occurrences.objects.get(pk=pk)
-    #print(occ.geom_original.x)
     context = {
         'occ_detail': occ,
     }
@@ -32,9 +31,7 @@ class OccurrencesGeoJson(GeoJSONLayerView):
     properties = ('popup_content',)
 
     def get_queryset(self):
-        context = Occurrences.objects.extra(select={'geom':'geom_original'})#filter(
-            #uf=self.request.session['estado']['abreviacao'],
-            #tancagens__nome__icontains='etanol')
+        context = Occurrences.objects.extra(select={'geom':'geom_original'})
         return context
 
 occs_geojson = OccurrencesGeoJson.as_view()
