@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def occs_list(request):
     template_name = 'occs_list.html'
-    objects = Occurrences.objects.all()#values('scientificName', 'family', 'hasCoordinate', 'county', 'taxonRank', 'municipality', 'locality', 'pk')
+    objects = Occurrences.objects.only('scientificName', 'family', 'hasCoordinate', 'county', 'taxonRank', 'municipality', 'locality')
     paginator = Paginator(objects, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
