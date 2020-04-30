@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Occurrences
 from djgeojson.views import GeoJSONLayerView
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def occs_list(request):
     template_name = 'occs_list.html'
     objects = Occurrences.objects.all()#values('scientificName', 'family', 'hasCoordinate', 'county', 'taxonRank', 'municipality', 'locality', 'pk')
@@ -15,6 +17,7 @@ def occs_list(request):
     }
     return render(request, template_name, context)
 
+@login_required
 def occ_detail(request, pk):
     template_name = 'occs_details.html'
     occ = Occurrences.objects.get(pk=pk)
@@ -23,6 +26,7 @@ def occ_detail(request, pk):
     }
     return render(request, template_name, context)
 
+@login_required
 def occs_map(request):
     return render(request, 'occs_mapSNDB.html')
 
