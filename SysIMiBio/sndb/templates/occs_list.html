@@ -33,23 +33,24 @@
                 {% endfor %}
             </table>
 
-    <div class="pagination">
-    <span class="step-links">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
             {% if page_obj.has_previous %}
-                <a class="btn btn-success" href="?page=1" role="button"> Início </a>
-                <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}" role="button"> Anterior </a>
+                <li class="page-item disabled">
+                    <li class="page-item"><a class="page-link" href="?page=1"> Início</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> {{ page_obj.previous_page_number }} </a></li>
             {% endif %}
-
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-
+            <span class="current">
+                <li class="page-item active">
+                  <a class="page-link" href="#"> {{ page_obj.number }} <span class="sr-only">(current)</span></a>
+                </li>
+            </span>
             {% if page_obj.has_next %}
-                <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}" role="button"> Próximo </a>
-                <a class="btn btn-danger" href="?page={{ page_obj.paginator.num_pages }}" role="button"> Último </a>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"> {{ page_obj.next_page_number }} </a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> Ultimo </a></li>
             {% endif %}
-                </span>
-    </div>
+        </ul>
+    </nav>
         {% else %}
             <p class="alert alert-warning">
             <i class="fa fa-warning"></i> Base de datos sin registros!</p>
