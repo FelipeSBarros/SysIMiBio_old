@@ -5,8 +5,8 @@ app_name = 'imibio'
 
 urlpatterns = [
     path('', v.imibio_occs_list, name='imibio_occs_list'),
-    path('<int:pk>', v.imibio_occ_detail, name='imibio_occ_detail'),
-    path('Agregar/', v.agregar_occurencia, name='agregar_occurencia'),
+    path('detalles/<int:pk>/', v.Imibio_occ_detail, name='imibio_occ_detail'),
+    path('detalles/agregar', v.agregar_occurencia, name='agregar_occurencia'),
     #path('mapaSNDB/', v.occs_map, name='occs_mapSNDB'),
     #path('geojson/', v.occs_geojson, name='occs_geojson'),
     #path('occsList/', v.occs, name='occsList'),

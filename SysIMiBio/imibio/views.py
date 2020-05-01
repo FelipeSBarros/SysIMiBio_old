@@ -20,7 +20,7 @@ def imibio_occs_list(request):
     return render(request, template_name, context)
 
 @login_required
-def imibio_occ_detail(request, pk):
+def Imibio_occ_detail(request, pk):
     template_name = 'occs_details.html'
     occ = Occurrences_imibio.objects.get(pk=pk)
     context = {
@@ -58,7 +58,13 @@ def agregar_occurencia(request):
             occ.author = request.user
             #occ.published_date = timezone.now()
             occ.save()
-            return redirect('imibio_occ_detail', pk=occ.pk)
+            template_name = 'occs_details.html'
+            #occ = Occurrences_imibio.objects.get(pk=pk)
+            context = {
+                'occ_detail': occ,
+            }
+            return render(request, template_name, context)
+
     else:
         form = OccForm()
     return render(request, 'agregar_occ.html', {'form': form})
