@@ -58,6 +58,7 @@ def agregar_occurencia(request):
             occ.author = request.user
             #occ.published_date = timezone.now()
             occ.save()
+            print("OK")
             template_name = 'occs_details.html'
             #occ = Occurrences_imibio.objects.get(pk=pk)
             context = {
@@ -66,5 +67,6 @@ def agregar_occurencia(request):
             return render(request, template_name, context)
 
     else:
+        print("NOK")
         form = OccForm()
     return render(request, 'agregar_occ.html', {'form': form})

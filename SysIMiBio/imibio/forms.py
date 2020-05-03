@@ -2,23 +2,25 @@ from django import forms
 from .models import Occurrences_imibio
 
 class OccForm(forms.ModelForm):
-    occurrenceID = forms.CharField(required=False)
-    basisOfRecord = forms.CharField(required=False)
-    catalogNumber = forms.CharField(required=False)
-    scientificName = forms.CharField(required=False)
-    kingdom = forms.CharField(required=False)
-    phylum = forms.CharField(required=False)
-    clase = forms.CharField(required=False)
-    order = forms.CharField(required=False)
-    family = forms.CharField(required=False)
-    genus = forms.CharField(required=False)
+    occurrenceID = forms.CharField(required=True)
+    basisOfRecord = forms.CharField(required=True)
+    institutionCode = forms.CharField(required=True)
+    collectionCode = forms.CharField(required=True)
+    catalogNumber = forms.CharField(required=True)
+    scientificName = forms.CharField(required=True)
+    kingdom = forms.CharField(required=True)
+    phylum = forms.CharField(required=True)
+    clase = forms.CharField(required=True)
+    order = forms.CharField(required=True)
+    family = forms.CharField(required=True)
+    genus = forms.CharField(required=True)
     specificEpithet = forms.CharField(required=False)
     taxonRank = forms.CharField(required=False)
     infraspecificEpithet = forms.CharField(required=False)
     identificationQualifier = forms.CharField(required=False)
-    county = forms.CharField(required=False)
-    stateProvince = forms.CharField(required=False)
-    locality = forms.CharField(required=False)
+    county = forms.CharField(required=True)
+    stateProvince = forms.CharField(required=True)
+    locality = forms.CharField(required=True)
     recordedBy = forms.CharField(required=False)
     recordNumber = forms.CharField(required=False)
 
@@ -28,8 +30,8 @@ class OccForm(forms.ModelForm):
             'occurrenceID',
             #dicterms:modified,  # es este el campo "modified" que figura en SNDB?
             'basisOfRecord',
-            #'institutionCode',
-            #collectionCode,
+            'institutionCode',
+            'collectionCode',
             'catalogNumber',
             'scientificName',
             'kingdom',
@@ -41,7 +43,7 @@ class OccForm(forms.ModelForm):
             'specificEpithet',
             'taxonRank',
             'infraspecificEpithet',
-            # 'scientificNameAuthorship', # no existe en dwc
+            # 'scientificNameAutorship', # no existe en dwc
             'identificationQualifier',
             'county',
             'stateProvince',
