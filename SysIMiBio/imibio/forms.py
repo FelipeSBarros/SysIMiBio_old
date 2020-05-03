@@ -2,7 +2,7 @@ from django import forms
 from .models import Occurrences_imibio
 
 class OccForm(forms.ModelForm):
-    occurrenceID = forms.CharField(required=True)
+    #occurrenceID = forms.CharField(required=True) # not necessary. it is created on insertion
     basisOfRecord = forms.CharField(required=True)
     institutionCode = forms.CharField(required=True)
     collectionCode = forms.CharField(required=True)

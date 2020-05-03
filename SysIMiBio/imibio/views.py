@@ -67,6 +67,5 @@ def agregar_occurencia(request):
             return render(request, template_name, context)
 
     else:
-        print("NOK")
         form = OccForm()
     return render(request, 'agregar_occ.html', {'form': form})
