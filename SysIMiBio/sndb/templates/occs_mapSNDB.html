@@ -7,11 +7,14 @@
 {% endblock css %}
 
 {% block content %}
+    <h1>
+
+    </h1>
+
     {% if user.is_authenticated %}
         <div id="map">
         </div>
         <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">
-        <input type="hidden" id="occsCoord" value="{% url 'sndb:occsList' %}">
     {% else %}
         <div class="alert alert-danger" role="alert">
             Acceso negado. Logar o crear usuário.
@@ -20,8 +23,16 @@
 {% endblock content %}
 
 {% block js %}
-    <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
-    <script src="{% static 'libs/leaflet-heat/leaflet-heat.js' %}"></script>
-    <script src="{% url 'sndb:occsList' %}"></script>
-    <script src="{% static 'js/map.js' %}"></script>
+    <script>
+        var heatCoords = [
+            {% for occ in occs %}
+                {% if occ.geom_original %}
+                    [{{ occ.geom_original.y|safe }}, {{ occ.geom_original.x|safe }}, 1],
+                {% endif %}
+            {% endfor %}
+        ];
+    </script>
+    <script type="application/javascript" src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+    <script type="application/javascript" src="{% static 'libs/leaflet-heat/leaflet-heat.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock js %}

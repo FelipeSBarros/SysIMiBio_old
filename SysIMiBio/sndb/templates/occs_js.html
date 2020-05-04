@@ -1,5 +1,7 @@
-var occsCoord = [
+var heatCoords = [
 {% for occ in occs %}
-    [{{ occ.geom_original.y|safe }}, {{ occ.geom_original.x|safe}}, {{1}}],
+    {% if occ.geom_original %}
+        [{{ occ.geom_original.y|safe }}, {{ occ.geom_original.x|safe }}, 1],
+    {% endif %}
 {% endfor %}
 ];

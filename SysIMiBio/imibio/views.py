@@ -1,15 +1,19 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
-from .models import Occurrences_imibio
-from djgeojson.views import GeoJSONLayerView
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from djgeojson.views import GeoJSONLayerView
+
 from .forms import OccForm
-from django.shortcuts import redirect
+from .models import Occurrences_imibio
+
 
 @login_required
 def imibio_occs_list(request):
     template_name = 'occs_list.html'
-    objects = Occurrences_imibio.objects.only('scientificName', 'family', 'hasCoordinate', 'county', 'taxonRank', 'municipality', 'locality')
+    objects = Occurrences_imibio.objects.only(
+        'scientificName', 'family', 'hasCoordinate',
+        'county', 'taxonRank', 'municipality', 'locality'
+    )
     paginator = Paginator(objects, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -18,6 +22,7 @@ def imibio_occs_list(request):
         'page_obj': page_obj,
     }
     return render(request, template_name, context)
+
 
 @login_required
 def Imibio_occ_detail(request, pk):
@@ -28,26 +33,43 @@ def Imibio_occ_detail(request, pk):
     }
     return render(request, template_name, context)
 
+
 @login_required
 def imibio_occs_map(request):
-    return render(request, 'occs_mapSNDB.html')
+    occsHeat = Occurrences_imibio.objects.filter(
+        decimalLatitude__isnull=False,
+        decimalLongitude__isnull=False
+    )
+    context = {
+        'occs': occsHeat,
+    }
+    return render(request, 'occs_mapSNDB.html', context)
+
 
 class OccurrencesGeoJson(GeoJSONLayerView):
     model = Occurrences_imibio
     properties = ('popup_content',)
 
     def get_queryset(self):
-        context = Occurrences_imibio.objects.extra(select={'geom':'geom_original'})
+        context = Occurrences_imibio.objects.extra(
+            select={'geom': 'geom_original'}
+        )
         return context
+
 
 occs_geojson = OccurrencesGeoJson.as_view()
 
+
 def imibio_occs(request):
-    occsHeat = Occurrences_imibio.objects.filter(decimalLatitude__isnull=False, decimalLongitude__isnull=False)
+    occsHeat = Occurrences_imibio.objects.filter(
+        decimalLatitude__isnull=False,
+        decimalLongitude__isnull=False
+    )
     context = {
         'occs': occsHeat,
     }
     return render(request, 'occs_js.html', context)
+
 
 @login_required
 def agregar_occurencia(request):
@@ -56,11 +78,11 @@ def agregar_occurencia(request):
         if form.is_valid():
             occ = form.save(commit=False)
             occ.author = request.user
-            #occ.published_date = timezone.now()
+            # occ.published_date = timezone.now()
             occ.save()
             print("OK")
             template_name = 'occs_details.html'
-            #occ = Occurrences_imibio.objects.get(pk=pk)
+            # occ = Occurrences_imibio.objects.get(pk=pk)
             context = {
                 'occ_detail': occ,
             }

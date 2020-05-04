@@ -8,5 +8,5 @@ urlpatterns = [
     path('<int:pk>', v.occ_detail, name='occ_detail'),
     path('mapaSNDB/', v.occs_map, name='occs_mapSNDB'),
     path('geojson/', v.occs_geojson, name='occs_geojson'),
-    path('occsList/', v.occs, name='occsList'),
+    path('occslist.js/', v.occs, name='occsList'),
 ]

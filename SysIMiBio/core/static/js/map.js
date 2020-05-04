@@ -14,11 +14,11 @@ var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}
 });
 
 var myStyle = {
-        fillColor: '#ffffff',
-        weight: 2,
-        opacity: 1,
-        color: '#000000',
-        fillOpacity: 0.6
+    fillColor: '#ffffff',
+    weight: 2,
+    opacity: 1,
+    color: '#000000',
+    fillOpacity: 0.6
 };
 
 var occurrences = L.geoJson([], {
@@ -26,7 +26,7 @@ var occurrences = L.geoJson([], {
     pointToLayer: function (feature, latlng) {
         return new L.CircleMarker(latlng, {radius: 4});
     },
-     onEachFeature: onEachFeature,
+    onEachFeature: onEachFeature,
 });
 
 var occs_url = $("#occs_geojson").val();
@@ -34,9 +34,13 @@ var occs_url = $("#occs_geojson").val();
 $.getJSON(occs_url, function (data) {
     // Add GeoJSON layer
     occurrences.addData(data);
-})
+});
 
-var heat = L.heatLayer(occsCoord, {
+heatPoints = heatCoords.map(function (p) {
+    return [p[0], p[1]];
+});
+
+var heat = L.heatLayer(heatPoints, {
     radius: 22,
     blur: 30,
     max: 1,
@@ -51,8 +55,8 @@ var map = L.map('map', {
 });
 
 var overlays = {
-    "occurrences":occurrences,
-    "Mapa caliente":heat,
+    "occurrences": occurrences,
+    "Mapa caliente": heat,
 };
 
 var baseLayers = {
