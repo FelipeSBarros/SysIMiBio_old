@@ -86,13 +86,39 @@ occs %>%
   filter(
     kingdom %in% c('Fungi', "Protozoa", "Bacteria") |
       phylum == "Mollusca" |
-      clase %in% c("Myxini", "Hyperoartia", "Chondrichthyes", "Actinopterygii", "Sarcopterygii",
-                       "Mammalia", "Aves", "Amphibia", "Reptilia", "Magnoliopsida", "Insecta", "Arachnida",
+      clase %in% c(
+        "Mammalia", "Aves", "Amphibia", "Reptilia",
+        "Myxini", "Hyperoartia", "Chondrichthyes", "Actinopterygii", "Sarcopterygii", # peces
+        "Rodophyta", "Chlorophyta", "Phaeophyceae", "Chrysophyceae", "Euglenoidea", "Ellobiopsea", "Dinophyceae", # algas
+        
+        "Magnoliopsida", "Insecta", "Arachnida",
                        "Rodophyta", "Chlorophyta", "Phaeophyceae", "Chrysophyceae", 
                        "Euglenoidea", "Ellobiopsea", "Dinophyceae",
                    "Cycadopsida", "Ginkgoopsida", "Pinopsida", "Gnetopsida") |
-      order %in% c("Coleoptera", "Lepidoptera", "Diptera", "Hymenoptera", "Decapoda", "Asterales") |
-      family == "Formicidae"
+      order %in% c("Coleoptera", "Lepidoptera", "Decapoda", "Diptera", 
+                   "Cycadales", "Ginkgoales", "Pinales", "Gnatales", # plantas
+                   "Amborellales", "Nymphaeales", "Austrobaileyales",
+                   'Chloranthales', "Magnoliales", "Laurales", "Canellales",
+                   "Piperales", "Acorales", "Alismatales", "Petrosaviales",
+                   "Dioscoreales", "Pandanales", "Liliales", "Asparagales",
+                   "Arecales", "Poales", "Commelinales", "Zingiberales",
+                   "Ceratophyllales", "Ranunculales", "Sabiaceae",
+                   "Proteales", "Trochodendrales", "Buxales",
+                   "Gunnerales", "Dillniaceae", "Saxifragales",
+                   "Vitales", "Zygophyllales", "Celatrales",
+                   "Oxalidades", "Malpighiales", "Fabales",
+                   "Rosales", "Cucurbitales", "Fagales",
+                   "Geraniales", "Myrtales", "Crossosomatales",
+                   "Picramniales", "Sapindales", "Huerteales",
+                   "Malvales", "Brassicales", "Santalales",
+                   "Berberidopsiadales", "Caryopphyllales",
+                   "Cornales", "Ericales", "Garryales", "Gentianales",
+                   "Solanales", "Boraginales", "Lamiales",
+                   "Aquifoliales", "Asterales", "Escalloniales",
+                   "Bruniales", "Apiales", 
+                   "Paracryphiales", "Dipsacales" # plantas
+                   ) |
+      family %in% c("Formicidae", "Apidae") # hormigas y abejas
     ) %>% 
   mutate(
     grupo = dplyr::case_when(
@@ -110,84 +136,42 @@ occs %>%
       clase %in% c("Rodophyta", "Chlorophyta", "Phaeophyceae", 
                    "Chrysophyceae", "Euglenoidea", 
                    "Ellobiopsea", "Dinophyceae") ~ 'Algas (dulceacuícolas y terrestres)',
-      clase %in% c("Cycadopsida", "Ginkgoopsida", "Pinopsida", "Gnetopsida") ~'Gimnospermas',
+      #clase %in% c("Cycadopsida", "Ginkgoopsida", "Pinopsida", "Gnetopsida") ~'Gimnospermas',
       
       order == "Coleoptera"  ~ 'Escarabajos',
       order == "Lepidoptera" ~ 'Mariposas',
       order == 'Decapoda' ~ 'Decápodos (dulceacuícolas y terrestres)',
       order == "Diptera" ~ 'Dípteros',
-      order %in% c(
-        "Nymphaeales", "Austrobaileyales", "Magnoliopsida",
-        "Ranunculales", "Sabiales", "Trochodendrales", "Buxales", "Gunnerales",
-        "Beberberidopsidales", "Dilleniales", "Caryophyllales", "Santanales",
-        "Saxifragales", "Vitales", "Celastrales", "Curcubitales", "Fabales", 
-        "Fagales", "Malpighiales", "Oxalidales", "Rosales", "Zyogophyllales",
-        "Brassicales", "Crossosomatales", "Geraniales", "Huerteales", "Malvales",
-        "Myrtales", "Picramniales", "Sapindales", "Acirales", "Alismatales", 
-        "Petrosaviales", "Dioscoreales", "Pandanales", "Liliales", "Asparagales",
-        "Arecales", "Commelinales", "Zingiberales", "Poales", "Asterales") ~'Angiospermas',
+      order %in% c("Cycadales", "Ginkgoales", "Pinales", "Gnatales",
+                   "Amborellales", "Nymphaeales", "Austrobaileyales",
+                   'Chloranthales', "Magnoliales", "Laurales", "Canellales",
+                   "Piperales", "Acorales", "Alismatales", "Petrosaviales",
+                   "Dioscoreales", "Pandanales", "Liliales", "Asparagales",
+                   "Arecales", "Poales", "Commelinales", "Zingiberales",
+                   "Ceratophyllales", "Ranunculales", "Sabiaceae",
+                   "Proteales", "Trochodendrales", "Buxales",
+                   "Gunnerales", "Dillniaceae", "Saxifragales",
+                   "Vitales", "Zygophyllales", "Celatrales",
+                   "Oxalidades", "Malpighiales", "Fabales",
+                   "Rosales", "Cucurbitales", "Fagales",
+                   "Geraniales", "Myrtales", "Crossosomatales",
+                   "Picramniales", "Sapindales", "Huerteales",
+                   "Malvales", "Brassicales", "Santalales",
+                   "Berberidopsiadales", "Caryopphyllales",
+                   "Cornales", "Ericales", "Garryales", "Gentianales",
+                   "Solanales", "Boraginales", "Lamiales",
+                   "Aquifoliales", "Asterales", "Escalloniales",
+                   "Bruniales", "Apiales", 
+                   "Paracryphiales", "Dipsacales") ~'Angiospermas',
 
       family == "Formicidae" ~'Hormigas',
       family == "Apidae" ~'Abejas',
-      family == 'Dasypogonaceae' ~'Angiospermas',
+      #family == 'Dasypogonaceae' ~'Angiospermas',
       
       TRUE ~ order)) %>% 
   group_by(grupo) %>% 
   summarise(spp_total = sum(spp_total, na.rm=TRUE)) %>%
-  arrange(desc(spp_total)) %>% collect()
+  arrange(desc(spp_total)) %>% collect() %>% 
+  write.csv("./output/GruposArgentina.csv")
 
 # Grupos para Misiones Txt ----
-occs %>%
-  group_by(kingdom, phylum, clase, order, family) %>% 
-  summarise(spp_total = count(distinct(species))) %>%
-  arrange(desc(spp_total)) %>% 
-  ungroup() %>% 
-  filter(
-    stateProvince == 'Misiones',
-    kingdom %in% c('Fungi', "Protozoa", "Bacteria") |
-      phylum == "Mollusca" |
-      clase %in% c("Myxini", "Hyperoartia", "Chondrichthyes", "Actinopterygii", "Sarcopterygii",
-                   "Mammalia", "Amphibia", "Magnoliopsida", "Insecta", "Arachnida",
-                   "Rodophyta", "Chlorophyta", "Phaeophyceae", "Chrysophyceae", 
-                   "Euglenoidea", "Ellobiopsea", "Dinophyceae",
-                   "Cycadopsida", "Ginkgoopsida", "Pinopsida", "Gnetopsida") |
-      order %in% c("Coleoptera", "Lepidoptera", "Diptera", "Hymenoptera", "Decapoda", "Asterales") |
-      family == "Formicidae"
-  ) %>% 
-  mutate(
-    grupo = dplyr::case_when(
-      kingdom == 'Fungi' ~'Hongos',
-      kingdom %in% c("Bacteria", 'Protozoa') ~'Protozoos y Bacterias',
-      
-      phylum == "Mollusca" ~"Moluscos",
-      
-      clase %in% c("Myxini", "Hyperoartia", "Chondrichthyes", 
-                   "Actinopterygii", "Sarcopterygii") ~ 'Peces',
-      clase %in% c("Rodophyta", "Chlorophyta", "Phaeophyceae", 
-                   "Chrysophyceae", "Euglenoidea", 
-                   "Ellobiopsea", "Dinophyceae") ~ 'Algas (dulceacuícolas y terrestres)',
-      clase %in% c("Cycadopsida", "Ginkgoopsida", "Pinopsida", "Gnetopsida") ~'Gimnospermas',
-      
-      order == "Coleoptera"  ~ 'Escarabajos',
-      order == "Lepidoptera" ~ 'Mariposas',
-      order == 'Decapoda' ~ 'Decápodos (dulceacuícolas y terrestres)',
-      order == "Diptera" ~ 'Dípteros',
-      order %in% c(
-        "Nymphaeales", "Austrobaileyales", "Magnoliopsida",
-        "Ranunculales", "Sabiales", "Trochodendrales", "Buxales", "Gunnerales",
-        "Beberberidopsidales", "Dilleniales", "Caryophyllales", "Santanales",
-        "Saxifragales", "Vitales", "Celastrales", "Curcubitales", "Fabales", 
-        "Fagales", "Malpighiales", "Oxalidales", "Rosales", "Zyogophyllales",
-        "Brassicales", "Crossosomatales", "Geraniales", "Huerteales", "Malvales",
-        "Myrtales", "Picramniales", "Sapindales", "Acirales", "Alismatales", 
-        "Petrosaviales", "Dioscoreales", "Pandanales", "Liliales", "Asparagales",
-        "Arecales", "Commelinales", "Zingiberales", "Poales", "Asterales") ~'Angiospermas',
-      
-      family == "Formicidae" ~'Hormigas',
-      family == "Apidae" ~'Abejas',
-      family == 'Dasypogonaceae' ~'Angiospermas',
-      
-      TRUE ~ order)) %>% 
-  group_by(grupo) %>% 
-  summarise(spp_total = sum(spp_total, na.rm=TRUE)) %>%
-  arrange(desc(spp_total)) %>% collect()
