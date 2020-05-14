@@ -20,6 +20,7 @@ dbGetQuery(con, "select count(*) from sndb_occurrences")
 
 # connecting to sndb_occurrences ----
 occs <- tbl(con, "sndb_occurrences")
+ObsMisiones <- tbl(con, "obs_misiones")
 
 # initial analysis ----
 # total species by class
@@ -202,6 +203,93 @@ mergedData %>%
     "perc_Mis" = (spp_total_Mis/spp_total_Ar) * 100
   ) %>% arrange(desc(perc_Mis)) %>% 
   write_csv("./output/Grupos_ArgentinaMisiones.csv")
+
+# Grupos para Misiones Txt y spacial ----
+gruposMisiones2 <- ObsMisiones %>%
+  filter(
+    taxonRank == 'SPECIES',
+    taxonomicStatus == 'ACCEPTED',
+    kingdom %in% c(
+      'Fungi', "Protozoa", "Bacteria", "Plantae", "Animalia") |
+      phylum %in% c(
+        "Arthropoda", "Mollusca") |
+      clase %in% c(
+        "Aves", "Mammalia", "Amphibia", "Reptilia", 
+        "Actinopterygii", "Elasmobranchii", "Insecta", "Arachnida", "Malacostraca")) %>% 
+  group_by(kingdom, phylum, clase) %>% 
+  summarise(spp_total = count(distinct(species))) %>%
+  arrange(desc(spp_total)) %>% 
+  ungroup() %>% 
+  mutate(
+    grupo = dplyr::case_when(
+      
+      # peces
+      (kingdom == "Animalia" & clase %in%
+         c('Actinopterygii', 'Elasmobranchii')) ~'Reino Animalia y Clases Peces', # reino Animalia Y clases definidas
+      
+      # Aves
+      (kingdom == "Animalia" & clase == "Aves") ~ 'Reino Animalia y Order Aves',
+      
+      (kingdom == "Animalia" & clase == "Mammalia") ~ 'Reino Animalia y Clase Mammalia',
+      
+      (kingdom == "Animalia" & clase == "Amphibia") ~ 'Reino Animalia y Order Amphibia',
+      
+      (kingdom == "Animalia" & clase == "Reptilia") ~ 'Reino Animalia y Order Reptilia',
+      
+      (kingdom == "Animalia" & phylum == "Arthropoda") ~ 'Reino Animalia y phylum Arthropoda',
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Insecta') ~ 'Reino Animalia y phylum Arthropoda y clase Insecta',
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Arachnida') ~ 'Reino Animalia y phylum Arthropoda y clase Arachnida',
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Malacostraca') ~ 'Reino Animalia y phylum Arthropoda y clase Malacostraca',
+      
+      (kingdom == "Animalia" & phylum == "Mollusca") ~ 'Reino Animalia y phylum Mollusca',
+      
+      kingdom == "Plantae" ~"Plantas",
+      kingdom == "Animalia" ~"Animales",
+      kingdom == 'Fungi' ~'Hongos',
+      kingdom == "Bacteria" ~'Bacterias',
+      kingdom == 'Protozoa' ~'Protozoos'#,
+      
+      #TRUE ~ "No cumplió ninguna regla"
+    )) %>% 
+  group_by(grupo) %>% 
+  summarise(spp_total = sum(spp_total, na.rm=TRUE)) %>%
+  arrange(desc(spp_total)) %>% collect()
+
+#gruposMisiones2 %>% 
+# write_csv("./output/GruposMisiones2.csv")
+
+# Merging data
+(gruposArgentina <- read_csv("./output/GruposArgentina.csv"))
+(gruposMisiones <- read_csv("./output/GruposMisiones.csv"))
+(gruposMisiones2 <- read_csv("./output/GruposMisiones2.csv"))
+mergedData <- gruposArgentina %>% left_join(gruposMisiones,suffix = c("_Ar", "_Mis"), by = "grupo") %>% 
+  left_join(gruposMisiones2,suffix = c("", "_Mis2"), by = "grupo")
+mergedData %>% 
+  mutate(
+    "perc_Mis_TXT" = (spp_total_Mis/spp_total_Ar) * 100,
+    "perc_Mis_TXTSP" = (spp_total/spp_total_Ar) * 100
+  ) %>% arrange(desc(perc_Mis_TXTSP)) #%>% 
+  write_csv("./output/Grupos_ArgentinaMisiones2.csv")
+
+# teste reagrupando
+mergedData %>% 
+  mutate(
+    grupo = dplyr::case_when(
+      grupo %like% "Animalia" ~"Animales",
+      TRUE ~grupo)) %>% 
+  group_by(grupo) %>% 
+  summarise(
+    spp_total_Ar = sum(spp_total_Ar),
+    spp_total_MisTXT = sum(spp_total_Mis),
+    spp_total_MisTXTSP = sum(spp_total))
+%>% 
+  mutate(
+    perc_Mis_TXT = (spp_total_MisTXT/spp_total_Ar) * 100,
+    perc_Mis_TXTSP = (spp_total_MisTXTSP/spp_total_Ar) * 100) %>% 
+  arrange(desc(spp_total_MisTXTSP))
 
 # Teste sf ----
 library(sf)
