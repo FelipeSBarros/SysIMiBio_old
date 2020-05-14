@@ -84,54 +84,41 @@ occs %>%
 gruposArgentina <- occs %>%
   filter(
     taxonRank == 'SPECIES',
-    taxonomicStatus == 'ACCEPTED',
-    kingdom %in% c(
-      'Fungi', "Protozoa", "Bacteria", "Plantae", "Animalia") |
-      phylum %in% c(
-        "Arthropoda", "Mollusca") |
-      clase %in% c(
-        "Aves", "Mammalia", "Amphibia", "Reptilia", 
-        "Actinopterygii", "Elasmobranchii", "Insecta", "Arachnida", "Malacostraca")) %>% 
-  group_by(kingdom, phylum, clase) %>% 
-  summarise(spp_total = count(distinct(species))) %>%
-  arrange(desc(spp_total)) %>% 
-  ungroup() %>% 
+    taxonomicStatus == 'ACCEPTED') %>% 
       mutate(
         grupo = dplyr::case_when(
           
-          # peces
-          (kingdom == "Animalia" & clase %in%
-             c('Actinopterygii', 'Elasmobranchii')) ~'Reino Animalia y Clases Peces', # reino Animalia Y clases definidas
+          # Dicotiledoneas
+          (kingdom == "Plantae" & phylum == "Tracheophyta" &
+             clase == 'Magnoliopsida') ~ 'Dicotiledoneas',
+          # Monocotiledoneas
+          (kingdom == "Plantae" & phylum == "Tracheophyta" &
+             clase == 'Liliopsida') ~ 'Monocotiledoneas',
+          # Gismnospermas
+          (kingdom == "Plantae" & phylum == "Tracheophyta" &
+             ! clase %in% c("Liliopsida", "Magnoliopsida")) ~ 'Gimnospermas',
           
-          # Aves
-          (kingdom == "Animalia" & clase == "Aves") ~ 'Reino Animalia y Order Aves',
+          # Tracheophyta
+          (kingdom == "Plantae" & phylum == "Tracheophyta") ~ 'Reino Plantae y phylum Tracheophyta',
           
-          (kingdom == "Animalia" & clase == "Mammalia") ~ 'Reino Animalia y Clase Mammalia',
+          # Bryophitas
+          (kingdom == "Plantae" & phylum == "Bryophita") ~ 'Bryophita',
           
-          (kingdom == "Animalia" & clase == "Amphibia") ~ 'Reino Animalia y Order Amphibia',
-          
-          (kingdom == "Animalia" & clase == "Reptilia") ~ 'Reino Animalia y Order Reptilia',
-          
-          (kingdom == "Animalia" & phylum == "Arthropoda") ~ 'Reino Animalia y phylum Arthropoda',
-          (kingdom == "Animalia" & phylum == "Arthropoda" &
-             clase == 'Insecta') ~ 'Reino Animalia y phylum Arthropoda y clase Insecta',
-          (kingdom == "Animalia" & phylum == "Arthropoda" &
-             clase == 'Arachnida') ~ 'Reino Animalia y phylum Arthropoda y clase Arachnida',
-          (kingdom == "Animalia" & phylum == "Arthropoda" &
-             clase == 'Malacostraca') ~ 'Reino Animalia y phylum Arthropoda y clase Malacostraca',
-          
-          (kingdom == "Animalia" & phylum == "Mollusca") ~ 'Reino Animalia y phylum Mollusca',
-          
+          # Plantaes
           kingdom == "Plantae" ~"Plantas",
+          # Animalea
           kingdom == "Animalia" ~"Animales",
+          # Hongos
           kingdom == 'Fungi' ~'Hongos',
+          # Bacterias
           kingdom == "Bacteria" ~'Bacterias',
-          kingdom == 'Protozoa' ~'Protozoos'#,
+          # Protozoos
+          kingdom == 'Protozoa' ~'Protozoos',
           
-          #TRUE ~ "No cumplió ninguna regla"
+          TRUE ~ "No cumplió ninguna regla"
           )) %>% 
       group_by(grupo) %>% 
-      summarise(spp_total = sum(spp_total, na.rm=TRUE)) %>%
+      summarise(spp_total = count(distinct(species))) %>%
       arrange(desc(spp_total)) %>% collect()
 #gruposArgentina %>% 
  # write_csv("./output/GruposArgentina.csv")
