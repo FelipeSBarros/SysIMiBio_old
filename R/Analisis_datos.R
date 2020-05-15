@@ -84,7 +84,8 @@ occs %>%
 gruposArgentina <- occs %>%
   filter(
     taxonRank == 'SPECIES',
-    taxonomicStatus == 'ACCEPTED') %>% 
+    taxonomicStatus == 'ACCEPTED',
+    basisOfRecord != "FOSSIL_SPECIMEN") %>% 
       mutate(
         grupo = dplyr::case_when(
           
@@ -156,7 +157,8 @@ gruposMisiones <- occs %>%
   filter(
     taxonRank == 'SPECIES',
     taxonomicStatus == 'ACCEPTED',
-    stateProvince %like% '%siones') %>% 
+    stateProvince %like% '%siones',
+    basisOfRecord != "FOSSIL_SPECIMEN") %>% 
   mutate(
     grupo = dplyr::case_when(
       
@@ -242,7 +244,8 @@ mergedData %>%
 gruposMisiones2 <- ObsMisiones %>%
   filter(
     taxonRank == 'SPECIES',
-    taxonomicStatus == 'ACCEPTED') %>% 
+    taxonomicStatus == 'ACCEPTED',
+    basisOfRecord != "FOSSIL_SPECIMEN") %>% 
   mutate(
     grupo = dplyr::case_when(
       
@@ -328,4 +331,3 @@ mergedData <- mergedData %>%
   arrange(desc(perc_MisTXTSP))
 mergedData %>% 
   write_csv("./output/Grupos_ArgentinaMisiones.csv")
-
