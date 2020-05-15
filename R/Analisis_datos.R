@@ -129,8 +129,8 @@ gruposArgentina <- occs %>%
           # Tracheophyta
           (kingdom == "Plantae" & phylum == "Tracheophyta") ~ 'Reino Plantae y phylum Tracheophyta',
           
-          # Bryophitas
-          (kingdom == "Plantae" & phylum == "Bryophita") ~ 'Bryophita',
+          # Bryophytas
+          (kingdom == "Plantae" & phylum == "Bryophyta") ~ 'Bryophyta',
           
           # Plantaes
           kingdom == "Plantae" ~"Plantas",
@@ -201,8 +201,8 @@ gruposMisiones <- occs %>%
       # Tracheophyta
       (kingdom == "Plantae" & phylum == "Tracheophyta") ~ 'Reino Plantae y phylum Tracheophyta',
       
-      # Bryophitas
-      (kingdom == "Plantae" & phylum == "Bryophita") ~ 'Bryophita',
+      # Bryophytas
+      (kingdom == "Plantae" & phylum == "Bryophyta") ~ 'Bryophyta',
       
       # Plantaes
       kingdom == "Plantae" ~"Plantas",
@@ -231,6 +231,101 @@ mergedData <- gruposArgentina %>% right_join(gruposMisiones,suffix = c("_Ar", "_
 mergedData <- mergedData %>% 
   mutate(
     "perc_Mis" = (spp_total_Mis/spp_total_Ar) * 100
-  ) %>% arrange(desc(perc_Mis))
+  ) %>%
+  rename(Argentina = spp_total_Ar,
+         Misiones = spp_total_Mis) %>%
+  arrange(desc(perc_Mis))
 mergedData %>% 
   write_csv("./output/Grupos_ArgentinaMisiones.csv")
+
+# Grupo Misiones TXT y sp ----
+gruposMisiones2 <- ObsMisiones %>%
+  filter(
+    taxonRank == 'SPECIES',
+    taxonomicStatus == 'ACCEPTED') %>% 
+  mutate(
+    grupo = dplyr::case_when(
+      
+      # Dicotiledoneas
+      (kingdom == "Plantae" & phylum == "Tracheophyta" &
+         clase == 'Magnoliopsida') ~ 'Dicotiledoneas',
+      # Monocotiledoneas
+      (kingdom == "Plantae" & phylum == "Tracheophyta" &
+         clase == 'Liliopsida') ~ 'Monocotiledoneas',
+      # Gismnospermas
+      (kingdom == "Plantae" & phylum == "Tracheophyta" &
+         ! clase %in% c("Liliopsida", "Magnoliopsida")) ~ 'Gimnospermas',
+      
+      # Insectos
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Insecta') ~ 'Reino Animalia y phylum Arthropoda y clase Insecta',
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Arachnida') ~ 'Reino Animalia y phylum Arthropoda y clase Arachnida',
+      (kingdom == "Animalia" & phylum == "Arthropoda" &
+         clase == 'Malacostraca') ~ 'Reino Animalia y phylum Arthropoda y clase Malacostraca',
+      
+      (kingdom == "Animalia" & phylum == "Arthropoda") ~ 'Reino Animalia y phylum Arthropoda',
+      
+      # Moluscos
+      (kingdom == "Animalia" & phylum == "Mollusca") ~ 'Reino Animalia y phylum Mollusca',
+      
+      # Peces
+      (kingdom == "Animalia" & clase %in%
+         c('Actinopterygii', 'Elasmobranchii')) ~'Reino Animalia y Clases Peces', # reino Animalia Y clases definidas
+      
+      # Aves
+      (kingdom == "Animalia" & clase == "Aves") ~ 'Reino Animalia y Clase Aves',
+      # Mamalia
+      (kingdom == "Animalia" & clase == "Mammalia") ~ 'Reino Animalia y Clase Mammalia',
+      # Amphibia
+      (kingdom == "Animalia" & clase == "Amphibia") ~ 'Reino Animalia y Order Amphibia',
+      # Reptilia
+      (kingdom == "Animalia" & clase == "Reptilia") ~ 'Reino Animalia y Order Reptilia',
+      
+      
+      
+      # Tracheophyta
+      (kingdom == "Plantae" & phylum == "Tracheophyta") ~ 'Reino Plantae y phylum Tracheophyta',
+      
+      # Bryophytas
+      (kingdom == "Plantae" & phylum == "Bryophyta") ~ 'Bryophyta',
+      
+      # Plantaes
+      kingdom == "Plantae" ~"Plantas",
+      # Animalea
+      kingdom == "Animalia" ~"Animales",
+      # Hongos
+      kingdom == 'Fungi' ~'Hongos',
+      # Bacterias
+      kingdom == "Bacteria" ~'Bacterias',
+      # Protozoos
+      kingdom == 'Protozoa' ~'Protozoos',
+      
+      TRUE ~ "No cumplió ninguna regla"
+    )) %>% 
+  group_by(grupo) %>% 
+  summarise(spp_total = count(distinct(species))) %>%
+  arrange(desc(spp_total)) %>% collect()
+
+#gruposMisiones2 %>% 
+# write_csv("./output/GruposMisiones2.csv")
+
+# Merging data
+(gruposArgentina <- read_csv("./output/GruposArgentina.csv"))
+(gruposMisiones <- read_csv("./output/GruposMisiones.csv"))
+(gruposMisiones2 <- read_csv("./output/GruposMisiones2.csv"))
+mergedData <- gruposArgentina %>% right_join(gruposMisiones,suffix = c("_Ar", "_Mis"), by = "grupo")
+mergedData <- mergedData %>% right_join(gruposMisiones2, by = "grupo") %>%
+  rename(
+    riqueza_Ar = spp_total_Ar,
+    riqueza_Mis = spp_total_Mis,
+    riqueza_MisTXTSP = spp_total)
+mergedData <- mergedData %>% 
+  mutate(
+    "perc_MisTXT" = (riqueza_Mis/riqueza_Ar) * 100,
+    "perc_MisTXTSP" = (riqueza_MisTXTSP/riqueza_Ar) * 100
+  ) %>%
+  arrange(desc(perc_MisTXTSP))
+mergedData %>% 
+  write_csv("./output/Grupos_ArgentinaMisiones.csv")
+
