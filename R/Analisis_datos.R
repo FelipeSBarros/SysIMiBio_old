@@ -331,3 +331,60 @@ mergedData <- mergedData %>%
   arrange(desc(perc_MisTXTSP))
 mergedData %>% 
   write_csv("./output/Grupos_ArgentinaMisiones.csv")
+
+# Listado spp Argentina ----
+listaArgentina <- occs %>%
+  filter(
+    taxonRank == 'SPECIES',
+    taxonomicStatus == 'ACCEPTED',
+    basisOfRecord != "FOSSIL_SPECIMEN") %>% 
+  mutate(
+    grupo = dplyr::case_when(
+      
+      # Aves
+      (kingdom == "Animalia" & clase == "Aves") ~ 'Reino Animalia y Clase Aves',
+      # Mamalia
+      (kingdom == "Animalia" & clase == "Mammalia") ~ 'Reino Animalia y Clase Mammalia',
+      
+      TRUE ~ "No cumplió ninguna regla"
+    )) %>% 
+  select(grupo, species) %>% 
+  group_by(grupo, species) %>% 
+  summarise(spp_total = count(distinct(species))) %>%
+  arrange(grupo, species) %>% collect() %>% select(grupo, species)
+# listaArgentina %>% 
+# write_csv("./output/Lista_spp_Argentina.csv")
+
+# Listado spp Misiones -----
+listaMisiones <- 
+  ObsMisiones %>%
+  filter(
+    taxonRank == 'SPECIES',
+    taxonomicStatus == 'ACCEPTED',
+    basisOfRecord != "FOSSIL_SPECIMEN") %>% 
+  mutate(
+    grupo = dplyr::case_when(
+      
+      # Moluscos
+      (kingdom == "Animalia" & phylum == "Mollusca") ~ 'Reino Animalia y phylum Mollusca',
+      
+      # Peces
+      (kingdom == "Animalia" & clase %in%
+         c('Actinopterygii', 'Elasmobranchii')) ~'Reino Animalia y Clases Peces', # reino Animalia Y clases definidas
+      
+      # Aves
+      (kingdom == "Animalia" & clase == "Aves") ~ 'Reino Animalia y Clase Aves',
+      # Mamalia
+      (kingdom == "Animalia" & clase == "Mammalia") ~ 'Reino Animalia y Clase Mammalia',
+      # Amphibia
+      (kingdom == "Animalia" & clase == "Amphibia") ~ 'Reino Animalia y Order Amphibia',
+      # Reptilia
+      (kingdom == "Animalia" & clase == "Reptilia") ~ 'Reino Animalia y Order Reptilia',
+      
+      TRUE ~ "No cumplió ninguna regla"
+    )) %>% 
+  select(grupo, species) %>% 
+  group_by(grupo, species) %>% 
+  summarise(spp_total = count(distinct(species))) %>%
+  arrange(grupo, species) %>% collect() %>% select(grupo, species)
+listaMisiones %>% write_csv("./output/Lista_spp_Misiones.csv")
