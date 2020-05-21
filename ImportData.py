@@ -28,8 +28,8 @@ dbId is None
 chunksize = 10 ** 4
 #chunksize = 1000
 #filename = './data/occurrence.txt'
-filename = './data/tail3.txt'
-#filename = './data/Head1kOccurrences.txt'
+#filename = './data/tail3.txt'
+filename = './data/Head1kOccurrences.txt'
 for chunk in pd.read_csv(filename, sep = '\t', keep_default_na=False, na_values=['None'],
                          skiprows=lambda x: x in [5607, 5608, 5609, 8437, 8438, 8439, 9667, 9668, 9669, 9670, 9671, 9672,
                                                   9680, 9681, 9682, 11550, 11551, 11552, 15515, 15516, 15517, 19839, 19840, 19841,
