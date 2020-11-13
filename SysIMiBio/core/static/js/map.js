@@ -51,7 +51,7 @@ var map = L.map('map', {
     center: [-27, -55],
     zoom: 8,
     maxZoom: 20,
-    layers: [gstreets, occurrences, heat],
+    layers: [gstreets, occurrences],
 });
 
 var overlays = {

@@ -12,7 +12,10 @@ def occs_list(request):
     objects = Occurrences.objects.only(
         'scientificName', 'family', 'hasCoordinate',
         'county', 'taxonRank', 'municipality', 'locality'
-    )
+    ).filter(stateProvince__icontains='siones',
+             decimalLatitude__isnull=False,
+             decimalLongitude__isnull=False
+             )[0:100]
     paginator = Paginator(objects, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -36,9 +39,10 @@ def occ_detail(request, pk):
 @login_required
 def occs_map(request):
     occsHeat = Occurrences.objects.filter(
+        stateProvince__icontains='iones',
         decimalLatitude__isnull=False,
         decimalLongitude__isnull=False
-    )
+    )[0:100]
     context = {
         'occs': occsHeat,
     }
@@ -50,7 +54,11 @@ class OccurrencesGeoJson(GeoJSONLayerView):
     properties = ('popup_content',)
 
     def get_queryset(self):
-        context = Occurrences.objects.extra(select={'geom': 'geom_original'})
+        context = Occurrences.objects.filter(
+        stateProvince__icontains='iones',
+        decimalLatitude__isnull=False,
+        decimalLongitude__isnull=False
+    ).extra(select={'geom': 'geom_original'})[0:100]
         return context
 
 
@@ -59,6 +67,7 @@ occs_geojson = OccurrencesGeoJson.as_view()
 
 def occs(request):
     occsHeat = Occurrences.objects.filter(
+        stateProvince__icontains='iones',
         decimalLatitude__isnull=False,
         decimalLongitude__isnull=False
     )

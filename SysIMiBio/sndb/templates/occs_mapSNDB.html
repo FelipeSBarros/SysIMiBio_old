@@ -12,6 +12,9 @@
     </h1>
 
     {% if user.is_authenticated %}
+        <div class="alert alert-danger" role="alert">
+            Por cuestiones de desarrollo, se presentan solamente 100 ocurrencias y no su totalidad.
+        </div>
         <div id="map">
         </div>
         <input type="hidden" id="occs_geojson" value="{% url 'sndb:occs_geojson' %}">

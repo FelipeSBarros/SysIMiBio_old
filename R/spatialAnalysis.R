@@ -7,6 +7,9 @@ library(readr)
 library(sf)
 library(tmap)
 library(smoothr)
+library(ggplot2)
+library(spatstat)
+library(raster)
 
 # Create a connection to the database ----
 con <- dbConnect(RPostgres::Postgres(), dbname = 'imibio', 
@@ -62,7 +65,7 @@ landscapes <- misiones_sf %>%
 
 tm_shape(landscapes) +
   tm_borders()
-# Theselandscape sizes, ranging from 5000 up to 10,000 ha, are consis-tent with previous studies that quantified the effects habitat lossand fragmentation on biodiversity in the Atlantic Forest (e.g.,Crouzeilleset al.2014, Tambosiet al.2014)
+# Theselandscape sizes, ranging from 5000 up to 10,000 ha, are consistent with previous studies that quantified the effects habitat lossand fragmentation on biodiversity in the Atlantic Forest (e.g.,Crouzeilleset al.2014, Tambosiet al.2014)
 
 # Calculating amount occs for each landscape
 occs <- landscapes %>%
@@ -99,7 +102,7 @@ landscapeOccs <- tm_shape(landscapes) +
   tm_grid(lwd = 0, projection = 4326) + 
   tm_compass(position = c("left", "top")) +
   tm_scale_bar() 
-tmap_save(landscapeOccs, "Landscape_Occs.png")
+tmap_save(landscapeOccs, "./img/Landscape_Occs.png")
 
 
 riquezaSpp <- tm_shape(landscapes) +
@@ -109,15 +112,12 @@ riquezaSpp <- tm_shape(landscapes) +
   tm_grid(lwd = 0, projection = 4326) + 
   tm_compass(position = c("left", "top")) +
   tm_scale_bar() 
-tmap_save(riquezaSpp, "Landscape_RiquezaSpp.png")
+tmap_save(riquezaSpp, "./img/Landscape_RiquezaSpp.png")
 
 # tm_shape(landscapes) +
 #   tm_polygons("num_eoo", style = "fisher", palette = "viridis")
 
 # primera ordem ----
-library(spatstat)
-library(raster)
-
 #Creando PPP
 occs.ppp <- ppp(
   st_coordinates(occs_sf)[,1],
@@ -138,3 +138,79 @@ densidad <- tm_shape(occs_kernel) +
   tm_compass(position = c("left", "top")) +
   tm_scale_bar() 
 tmap_save(densidad, "Densidad_registros.png")
+
+# analsisis
+glimpse(landscapes)
+max(landscapes$num_species, na.rm = T)
+
+# tentando identificar outliers
+ggplot(landscapes, aes(x = num_obs)) + geom_histogram() +
+  theme_minimal() +
+  xlab("cantidad de observaciones") 
+# parece que num_obs > 17000 ja apresenta outliers
+ggsave("./img/histogram_obs.png")
+
+ggplot(landscapes, aes(x = log(num_obs))) + geom_histogram() +
+  theme_minimal() +
+  xlab("cantidad de observaciones") 
+
+ggplot(landscapes, aes(y = num_obs)) + geom_boxplot() +
+  theme_minimal() +
+  ylab("cantidad de observaciones") 
+
+ggplot(landscapes, aes(y = log(num_obs))) + geom_boxplot() +
+  theme_minimal() +
+  ylab("cantidad de observaciones") 
+
+# num_species
+ggplot(landscapes, aes(x = num_species)) + geom_histogram( bins = 30) +
+  theme_minimal() +
+  xlab("cantidad de especies") 
+# num_species > 7500 ja sao ouliers
+ggplot(landscapes, aes(x = log(num_species))) + geom_histogram() +
+  theme_minimal() +
+  xlab("cantidad de especies") 
+
+
+ggplot(landscapes, aes(y = num_species)) + geom_boxplot() +
+  theme_minimal() +
+  ylab("cantidad de especies") 
+
+ggplot(landscapes, aes(y = log(num_species))) + geom_boxplot() +
+  theme_minimal() +
+  ylab("cantidad de especies") 
+
+
+# teste com error padrão
+t <- landscapes %>% group_by(num_obs) %>% 
+  summarise(
+    evg = mean(num_species),
+    se = sd(num_species)/sqrt(n()),
+    semin = se*-1
+  )
+
+ggplot() +
+  geom_errorbar(data=t, mapping=aes(x=num_obs, ymin=semin, ymax=se), width=0.2, size=1) + 
+  geom_point(data=t, mapping=aes(x=num_obs, y=evg)) 
+
+
+# Sem outlier
+ggplot(landscapes, aes(x = num_obs, y = num_species)) + geom_point() +
+  geom_smooth() +
+  xlab("cantidad de observaciones") +
+  ylab("cantidad de especies")
+
+# filtrando por num_obs
+landscapes %>% filter(num_obs < 17000) %>% ggplot(aes(x = num_obs, y = num_species)) + geom_point() +
+  geom_smooth() +
+  xlab("cantidad de observaciones") +
+  ylab("cantidad de especies")
+ggsave("./img/curva_colecta.png")
+
+
+# filtrando por num_obs
+landscapes %>% filter(num_species < 7500) %>% ggplot(aes(x = num_obs, y = num_species)) + geom_point() +
+  geom_smooth(method = 'gam') +
+  xlab("cantidad de observaciones") +
+  ylab("cantidad de especies")
+# ggsave("./img/curva_colecta.png")
