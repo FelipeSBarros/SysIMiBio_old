@@ -56,7 +56,7 @@ pyrsistent==0.15.7
 python-dateutil==2.8.1
 python-decouple==3.3
 pytz==2020.1
-PyYAML==5.3
+PyYAML==5.4
 pyzmq==19.0.0
 Send2Trash==1.5.0
 Shapely==1.7.0
